@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Joshua Jose — Developer & Designer</title>
+  <meta name="description" content="Portfolio of Joshua Jose, a developer-designer and computer science student from Kerala, India, building fast, private, good-looking web software.">
+  <meta name="theme-color" content="#0b0a0c">
+  <meta property="og:title" content="Joshua Jose — Developer & Designer">
+  <meta property="og:description" content="Fast, private, good-looking web software. Projects, resume and notes.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='4' fill='%230b0a0c'/%3E%3Ccircle cx='8' cy='8' r='3.4' fill='%23ff5a1f'/%3E%3C/svg%3E">
+  <script>document.documentElement.classList.replace('no-js','js')</script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="progress" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Joshua Jose, home"><span class="brand-dot"></span>JJ</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#about" data-nav="about">About</a>
+      <a href="#work" data-nav="work">Work</a>
+      <a href="#skills" data-nav="skills">Skills</a>
+      <a href="#resume" data-nav="resume">Resume</a>
+      <a href="#notes" data-nav="notes">Notes</a>
+      <a href="#contact" data-nav="contact">Contact</a>
+    </nav>
+    <a class="pill magnetic" href="#contact">Let’s talk <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main id="main">
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="top">
+      <div class="glow" aria-hidden="true"></div>
+      <div class="grain" aria-hidden="true"></div>
+
+      <p class="eyebrow hero-in"><span class="live"></span> Open to university, internships &amp; freelance</p>
+
+      <h1 class="hero-title" aria-label="Joshua Jose">
+        <span class="mask"><span class="line">Joshua</span></span>
+        <span class="mask"><span class="line">Jose<i class="stop">.</i></span></span>
+      </h1>
+
+      <div class="hero-foot">
+        <p class="hero-lede hero-in">
+          Developer <em>×</em> designer. I build web software that is fast, private by design and good to look at.
+        </p>
+        <ul class="hero-meta hero-in">
+          <li><span>Based in</span>Kerala, India</li>
+          <li><span>Studying</span>Computer Science</li>
+          <li><span>Local time</span><b id="clock">--:--</b></li>
+        </ul>
+        <a class="scroll-hint hero-in" href="#about" aria-label="Scroll to About"><i></i>Scroll</a>
+      </div>
+    </section>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>Next.js</span><span>React</span><span>TypeScript</span><span>Python</span><span>WebAssembly</span><span>Three.js</span><span>Node.js</span><span>Tailwind</span><span>Figma</span><span>Git</span>
+        <span>Next.js</span><span>React</span><span>TypeScript</span><span>Python</span><span>WebAssembly</span><span>Three.js</span><span>Node.js</span><span>Tailwind</span><span>Figma</span><span>Git</span>
+      </div>
+    </div>
+
+    <!-- ============ ABOUT ============ -->
+    <section class="section about" id="about">
+      <p class="label" data-fade>( 01 · About )</p>
+      <p class="statement" id="statement">
+        I’m a computer science student who builds things to understand them. I run a digital services business, I’ve shipped five live apps, and I care as much about how software feels as how it works.
+      </p>
+
+      <div class="about-grid">
+        <div data-fade>
+          <h2 class="h2">Hello, I’m Joshua.</h2>
+          <p>I’m 20, from Kerala, and I finished my Higher Secondary in Computer Science at St Mary’s Cathedral Public School. For the last two years I’ve run a digital communications business that handles e-services, which taught me why secure, well-architected systems matter in the real world.</p>
+          <p>Cloud and AI courses from IBM and Oracle got me started, but using other people’s APIs made me want to understand the foundations underneath them: the data structures, the architecture, the logic. That’s the engine I’m going to university to learn how to build.</p>
+          <p class="fun"><b>Off screen:</b> I play the piano at my local church.</p>
+        </div>
+        <ul class="stats" data-fade>
+          <li><b data-count="5">0</b><span>live apps shipped</span></li>
+          <li><b data-count="4">0</b><span>credential providers</span></li>
+          <li><b data-count="3">0</b><span>languages spoken</span></li>
+          <li><b data-count="2">0</b><span>AI short films</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ WORK ============ -->
+    <section class="section work" id="work">
+      <div class="section-head">
+        <p class="label" data-fade>( 02 · Selected work )</p>
+        <h2 class="h1 split"><span class="mask"><span class="line">Things I’ve built</span></span><span class="mask"><span class="line">and shipped.</span></span></h2>
+      </div>
+      <div class="stack" id="stack"><!-- cards from content.js --></div>
+
+      <div class="experiments">
+        <p class="label" data-fade>( Experiments )</p>
+        <div class="exp-grid" id="exp"><!-- from content.js --></div>
+      </div>
+    </section>
+
+    <!-- ============ SKILLS ============ -->
+    <section class="section skills" id="skills">
+      <p class="label" data-fade>( 03 · Skills )</p>
+      <h2 class="h1 split"><span class="mask"><span class="line">An honest inventory.</span></span></h2>
+      <div class="skill-grid">
+        <article class="skill" data-fade>
+          <h3>Build</h3>
+          <ul><li>Next.js &amp; React</li><li>TypeScript &amp; JavaScript</li><li>Node.js &amp; Express</li><li>HTML, CSS, Tailwind</li><li>Python &amp; C</li></ul>
+        </article>
+        <article class="skill" data-fade>
+          <h3>Design</h3>
+          <ul><li>Interface &amp; layout</li><li>Motion &amp; interaction</li><li>Responsive design</li><li>Figma</li></ul>
+        </article>
+        <article class="skill" data-fade>
+          <h3>Applied AI</h3>
+          <ul><li>Prompt engineering</li><li>LLM integration (Gemini)</li><li>Machine &amp; deep learning basics</li><li>Generative video &amp; audio</li></ul>
+        </article>
+        <article class="skill" data-fade>
+          <h3>Foundations</h3>
+          <ul><li>Algorithms &amp; data structures</li><li>SQL &amp; relational databases</li><li>OOP &amp; SDLC</li><li>Git &amp; GitHub</li><li>Oracle Cloud basics</li></ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ RESUME ============ -->
+    <section class="section resume" id="resume">
+      <div class="section-head row">
+        <div>
+          <p class="label" data-fade>( 04 · Resume )</p>
+          <h2 class="h1 split"><span class="mask"><span class="line">Education &amp;</span></span><span class="mask"><span class="line">credentials.</span></span></h2>
+        </div>
+        <div class="resume-actions" data-fade>
+          <a class="btn magnetic" href="resume.pdf" download>Download PDF <span aria-hidden="true">↓</span></a>
+          <a class="btn ghost magnetic" href="resume.pdf" target="_blank" rel="noopener">View in browser <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+
+      <div class="resume-grid">
+        <div class="col" data-fade>
+          <h3 class="col-title">Education</h3>
+          <div class="tl">
+            <div class="tl-item">
+              <time>2022 – 2023</time>
+              <h4>Higher Secondary Certificate, Computer Science</h4>
+              <p class="muted">St Mary’s Cathedral Public School</p>
+              <p>Python, C, SQL, algorithmic thinking, object-oriented programming and the software development life cycle.</p>
+            </div>
+            <div class="tl-item">
+              <time>2020 – 2021</time>
+              <h4>Secondary School Leaving Certificate</h4>
+              <p class="muted">St Mary’s Cathedral Public School</p>
+              <p>Major in Computer Science (C, Python, SQL). Elected Head Boy; helped organise school sports meets.</p>
+            </div>
+          </div>
+
+          <h3 class="col-title">Languages</h3>
+          <ul class="langs">
+            <li><b>Malayalam</b><span>Native</span></li>
+            <li><b>English</b><span>B2</span></li>
+            <li><b>German</b><span>B1</span></li>
+            <li><b>Hindi</b><span>A2</span></li>
+          </ul>
+        </div>
+
+        <div class="col" data-fade>
+          <h3 class="col-title">Certifications</h3>
+          <div class="certs">
+            <details class="cert" open>
+              <summary><b>IBM</b><span>AI Developer Professional Certificate</span></summary>
+              <ul>
+                <li>Introduction to Software Engineering</li>
+                <li>Introduction to Artificial Intelligence</li>
+                <li>Generative AI: Introduction and Applications</li>
+                <li>Generative AI: Prompt Engineering Basics</li>
+                <li>Introduction to HTML, CSS &amp; JavaScript</li>
+                <li>Python for Data Science, AI &amp; Development</li>
+              </ul>
+            </details>
+            <details class="cert">
+              <summary><b>Oracle</b><span>Cloud Infrastructure 2025 Certified AI Foundations Associate</span></summary>
+              <ul><li>Foundational AI and machine learning services on Oracle Cloud.</li></ul>
+            </details>
+            <details class="cert">
+              <summary><b>Generative AI Master Mind</b><span>Fundamentals, tools and deep learning</span></summary>
+              <ul><li>Artificial Intelligence Fundamentals</li><li>Generative AI Tools</li><li>Generative AI &amp; Deep Learning</li></ul>
+            </details>
+            <details class="cert">
+              <summary><b>Intel</b><span>AI For All badges</span></summary>
+              <ul><li>AI Appreciate badge</li><li>AI Aware badge</li></ul>
+            </details>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ NOTES / BLOG ============ -->
+    <section class="section notes" id="notes">
+      <div class="section-head">
+        <p class="label" data-fade>( 05 · Notes )</p>
+        <h2 class="h1 split"><span class="mask"><span class="line">Writing &amp; thinking.</span></span></h2>
+      </div>
+      <div class="post-list" id="posts"><!-- from content.js --></div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="section contact" id="contact">
+      <p class="label" data-fade>( 06 · Contact )</p>
+      <h2 class="mega split">
+        <span class="mask"><span class="line">Let’s build</span></span>
+        <span class="mask"><span class="line">something good<i class="stop">.</i></span></span>
+      </h2>
+
+      <div class="contact-grid">
+        <div data-fade>
+          <p class="lede">Open to university opportunities, internships, freelance work and interesting problems. The quickest way to reach me is email.</p>
+          <a class="mail magnetic" id="mail" href="mailto:joshua5915g@gmail.com"><span>joshua5915g@gmail.com</span><i aria-hidden="true">↗</i></a>
+          <button class="copy" id="copy" type="button">Copy address</button>
+          <ul class="socials">
+            <li><a href="https://www.linkedin.com/in/joshua-jose-466975371/" target="_blank" rel="noopener noreferrer">LinkedIn <i aria-hidden="true">↗</i></a></li>
+            <li><a href="https://github.com/joshua5915g" target="_blank" rel="noopener noreferrer">GitHub <i aria-hidden="true">↗</i></a></li>
+            <li><a href="https://x.com/Profess57176192" target="_blank" rel="noopener noreferrer">X <i aria-hidden="true">↗</i></a></li>
+          </ul>
+        </div>
+
+        <form class="form" id="form" data-fade novalidate>
+          <label>Your name<input name="name" type="text" autocomplete="name" required></label>
+          <label>Your email<input name="email" type="email" autocomplete="email" required></label>
+          <label>Message<textarea name="msg" rows="5" required></textarea></label>
+          <button class="btn magnetic" type="submit">Write the email <span aria-hidden="true">↗</span></button>
+          <p class="form-status" id="status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>© 2026 Joshua Jose</span>
+    <span class="muted">Built by hand with HTML, CSS and JavaScript.</span>
+    <a href="#top" id="toTop">Back to top ↑</a>
+  </footer>
+
+  <!-- ============ DETAIL OVERLAY (projects + notes) ============ -->
+  <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Details" aria-hidden="true" hidden data-lenis-prevent>
+    <button class="ov-close" id="ovClose" type="button" aria-label="Close">
+      <svg viewBox="0 0 12 12" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2.5 2.5l7 7M9.5 2.5l-7 7"/></svg>
+    </button>
+    <div class="ov-body" id="ovBody"></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+  <script src="content.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
