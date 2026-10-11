@@ -208,6 +208,30 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .cert li { position: relative; padding-left: 18px; }
 .cert li::before { content: "→"; position: absolute; left: 0; color: var(--ember); }
 
+/* ---------- about portrait ---------- */
+.about-side { display: grid; gap: 18px; }
+.portrait { position: relative; margin: 0; aspect-ratio: 4 / 5; border-radius: 22px; overflow: hidden; background: var(--bg-2); border: 1px solid var(--line); }
+.portrait img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+.portrait::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(11, 10, 12, .75)), linear-gradient(135deg, rgba(255, 90, 31, .16), rgba(167, 139, 250, .12)); pointer-events: none; }
+.portrait figcaption { position: absolute; left: 18px; bottom: 16px; z-index: 1; font: 500 .75rem var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--text); }
+
+@media (min-width: 901px) { .about-grid > div:first-child { position: sticky; top: 110px; } }
+
+/* ---------- certificate gallery ---------- */
+.cert-gallery { margin-top: clamp(56px, 8vw, 110px); }
+.cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 18px; }
+.cert-card { display: grid; text-align: left; border: 1px solid var(--line); border-radius: 18px; background: var(--bg-2); overflow: hidden; transition: border-color .3s, transform .5s var(--ease); }
+.cert-card:hover { border-color: var(--amethyst); transform: translateY(-5px); }
+.cert-thumb { aspect-ratio: 4 / 3; background: #f3f1ee; overflow: hidden; }
+.cert-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; transition: transform .8s var(--ease); }
+.cert-card:hover .cert-thumb img { transform: scale(1.05); }
+.cert-meta { padding: 16px 18px 18px; display: grid; gap: 4px; }
+.cert-meta small { font: 500 .72rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ember); }
+.cert-meta b { font: 700 1.05rem/1.25 var(--display); letter-spacing: -.01em; }
+.cert-meta span { font-size: .88rem; color: var(--muted); }
+.ov-cert { margin: clamp(24px, 4vw, 48px) 0; border-radius: 16px; overflow: hidden; background: #f3f1ee; border: 1px solid var(--line); }
+.ov-cert img { display: block; width: 100%; height: auto; }
+
 /* ---------- notes ---------- */
 .post-list { border-top: 1px solid var(--line); }
 .post { position: relative; display: grid; grid-template-columns: 7rem 1fr auto; gap: 20px 32px; align-items: center; width: 100%; text-align: left; padding: 32px 4px; border-bottom: 1px solid var(--line); transition: padding .5s var(--ease), background .3s; }
@@ -356,12 +380,19 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
           <p>Cloud and AI courses from IBM and Oracle got me started, but using other people’s APIs made me want to understand the foundations underneath them: the data structures, the architecture, the logic. That’s the engine I’m going to university to learn how to build.</p>
           <p class="fun"><b>Off screen:</b> I play the piano at my local church.</p>
         </div>
-        <ul class="stats" data-fade>
-          <li><b data-count="5">0</b><span>live apps shipped</span></li>
-          <li><b data-count="4">0</b><span>credential providers</span></li>
-          <li><b data-count="3">0</b><span>languages spoken</span></li>
-          <li><b data-count="2">0</b><span>AI short films</span></li>
-        </ul>
+        <div class="about-side" data-fade>
+          <figure class="portrait">
+            <img src="assets/joshua.jpg" width="864" height="1184" loading="lazy" decoding="async"
+                 alt="Joshua standing in a grass field under a cloudy sky, arms open, wearing headphones">
+            <figcaption>Joshua Jose</figcaption>
+          </figure>
+          <ul class="stats">
+            <li><b data-count="5">0</b><span>live apps shipped</span></li>
+            <li><b data-count="5">0</b><span>credential providers</span></li>
+            <li><b data-count="3">0</b><span>languages spoken</span></li>
+            <li><b data-count="2">0</b><span>AI short films</span></li>
+          </ul>
+        </div>
       </div>
     </section>
 
@@ -462,8 +493,16 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
               <ul><li>Foundational AI and machine learning services on Oracle Cloud.</li></ul>
             </details>
             <details class="cert">
-              <summary><b>Generative AI Master Mind</b><span>Fundamentals, tools and deep learning</span></summary>
+              <summary><b>IBM SkillsBuild</b><span>Artificial Intelligence Fundamentals</span></summary>
+              <ul><li>Credential issued Sep 2025, verifiable on Credly.</li></ul>
+            </details>
+            <details class="cert">
+              <summary><b>Outskill</b><span>Generative AI Mastermind</span></summary>
               <ul><li>Artificial Intelligence Fundamentals</li><li>Generative AI Tools</li><li>Generative AI &amp; Deep Learning</li></ul>
+            </details>
+            <details class="cert">
+              <summary><b>GUVI × HCL</b><span>Webinar participation, Sep 2025</span></summary>
+              <ul><li>Generative AI &amp; Deep Learning: A Roadmap to a Successful Career.</li></ul>
             </details>
             <details class="cert">
               <summary><b>Intel</b><span>AI For All badges</span></summary>
@@ -471,6 +510,11 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
             </details>
           </div>
         </div>
+      </div>
+
+      <div class="cert-gallery">
+        <h3 class="col-title" data-fade>Certificates <span class="muted">· click to enlarge</span></h3>
+        <div class="cert-grid" id="certs"><!-- from content.js --></div>
       </div>
     </section>
 
@@ -610,6 +654,18 @@ window.SITE = {
     }
   ],
 
+  /* Certificates shown as a gallery in the Resume section. Images live in assets/. */
+  certificates: [
+    { id: "ibm-ai", issuer: "IBM SkillsBuild", title: "Artificial Intelligence Fundamentals", date: "Sep 22, 2025",
+      img: "assets/cert-ibm-ai-fundamentals.jpg", verify: "https://www.credly.com/badges/10536706-a71d-4019-b458-26b02570461a", kind: "Credential" },
+    { id: "ibm-se", issuer: "IBM · Coursera", title: "Introduction to Software Engineering", date: "Oct 9, 2025",
+      img: "assets/cert-ibm-software-engineering.jpg", verify: "https://coursera.org/verify/56BLJ53GJQHZ", kind: "Course certificate" },
+    { id: "outskill", issuer: "Outskill", title: "Generative AI Mastermind", date: "2025",
+      img: "assets/cert-outskill-genai.jpg", verify: null, kind: "Certificate of completion" },
+    { id: "guvi", issuer: "GUVI × HCL", title: "Generative AI & Deep Learning webinar", date: "Sep 20, 2025",
+      img: "assets/cert-guvi-hcl.jpg", verify: null, kind: "Certificate of participation" }
+  ],
+
   experiments: [
     {
       name: "The Walls Will Fall", year: "2025", url: "https://youtu.be/NmYFRIhBb7E",
@@ -710,6 +766,12 @@ window.SITE = {
       <span class="go">Watch on YouTube ↗</span>
     </a>`).join("");
 
+  $("#certs").innerHTML = S.certificates.map((c) => `
+    <button class="cert-card" type="button" data-cert="${esc(c.id)}" data-fade>
+      <span class="cert-thumb"><img src="${esc(c.img)}" alt="${esc(c.title)} certificate" loading="lazy" decoding="async"></span>
+      <span class="cert-meta"><small>${esc(c.issuer)}</small><b>${esc(c.title)}</b><span>${esc(c.kind)} · ${esc(c.date)}</span></span>
+    </button>`).join("");
+
   $("#posts").innerHTML = S.posts.map((p) => `
     <button class="post" type="button" data-post="${esc(p.id)}" data-fade>
       <span class="meta">${esc(p.date)}<br>${esc(p.read)} read</span>
@@ -746,6 +808,15 @@ window.SITE = {
     <h2 class="ov-title ov-r">${esc(p.title)}</h2>
     <div class="ov-article ov-r">${p.body.map((t) => `<p>${esc(t)}</p>`).join("")}</div>
     <div class="ov-actions ov-r"><button class="btn ghost" type="button" data-close>Back to notes</button></div>`;
+
+  const certHTML = (c) => `
+    <p class="ov-kicker ov-r">${esc(c.kind)}</p>
+    <h2 class="ov-title ov-r">${esc(c.title)}<small>${esc(c.issuer)} · ${esc(c.date)}</small></h2>
+    <div class="ov-cert ov-r"><img src="${esc(c.img)}" alt="${esc(c.title)} certificate issued to Joshua Jose"></div>
+    <div class="ov-actions ov-r">
+      ${c.verify ? `<a class="btn" href="${esc(c.verify)}" target="_blank" rel="noopener noreferrer">Verify online <span aria-hidden="true">↗</span></a>` : ""}
+      <button class="btn ghost" type="button" data-close>Back to resume</button>
+    </div>`;
 
   function openOverlay(html, origin) {
     if (ovBusy) return;
@@ -785,9 +856,11 @@ window.SITE = {
   }
 
   document.addEventListener("click", (e) => {
-    const t = e.target.closest("[data-project],[data-post]");
+    const t = e.target.closest("[data-project],[data-post],[data-cert]");
     if (t) {
-      const id = t.dataset.project || t.dataset.post;
+      const id = t.dataset.project || t.dataset.post || t.dataset.cert;
+      const cert = S.certificates.find((c) => c.id === id);
+      if (cert) return openOverlay(certHTML(cert), t);
       const proj = S.projects.find((p) => p.id === id);
       if (proj) return openOverlay(projectHTML(proj), t);
       const post = S.posts.find((p) => p.id === id);
@@ -906,6 +979,10 @@ window.SITE = {
     const end = +el.dataset.count, o = { v: 0 };
     gsap.to(o, { v: end, duration: 1.6, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 90%" }, onUpdate: () => (el.textContent = Math.round(o.v)) });
   });
+
+  // portrait parallax
+  const pimg = $(".portrait img");
+  if (pimg) gsap.fromTo(pimg, { yPercent: -6, scale: 1.14 }, { yPercent: 6, scale: 1.14, ease: "none", scrollTrigger: { trigger: ".portrait", start: "top bottom", end: "bottom top", scrub: true } });
 
   // stacking project cards (desktop): earlier cards recede as the next one arrives
   const mm = gsap.matchMedia();
