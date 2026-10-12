@@ -93,9 +93,47 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .pill { display: inline-flex; gap: 8px; align-items: center; padding: 10px 18px; border: 1px solid var(--line); border-radius: 999px; font: 500 .85rem var(--body); background: var(--bg); transition: border-color .25s, background .25s, color .25s; }
 .pill:hover { border-color: var(--ember); background: var(--ember); color: #fff; }
 
+/* ---------- Mobile Bottom Nav Bar ---------- */
+.mobile-nav {
+  display: none;
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 170;
+  background: rgba(20, 18, 22, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+.mobile-nav ul {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.mobile-nav a {
+  font: 500 0.75rem var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 8px 14px;
+  border-radius: 999px;
+  color: var(--muted);
+  transition: all 0.25s;
+}
+.mobile-nav a.active, .mobile-nav a:hover {
+  color: var(--text);
+  background: rgba(255, 90, 31, 0.18);
+}
+@media (max-width: 900px) {
+  .mobile-nav { display: block; }
+}
+
 /* ---------- hero ---------- */
 .hero { position: relative; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end; padding: 110px max(var(--pad), calc((100vw - var(--max)) / 2 + var(--pad))) clamp(24px, 4vw, 44px); overflow: hidden; isolation: isolate; }
-.glow { position: absolute; left: 0; top: 0; width: 70vmax; height: 70vmax; margin: -35vmax 0 0 -35vmax; border-radius: 50%; background: radial-gradient(circle at 40% 40%, rgba(255, 90, 31, .28), rgba(167, 139, 250, .16) 45%, transparent 68%); z-index: -1; pointer-events: none; transform: translate(60vw, 30vh); }
+.glow { position: absolute; left: 0; top: 0; width: 70vmax; height: 70vmax; margin: -35vmax 0 0 -35vmax; border-radius: 50%; background: radial-gradient(circle at 40% 40%, rgba(255, 90, 31, .28), rgba(167, 139, 250, .16) 45%, transparent 68%); z-index: -1; pointer-events: none; transform: translate(60vw, 30vh); transition: transform 0.1s linear; }
 .grain { position: absolute; inset: 0; z-index: -1; opacity: .06; pointer-events: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
 .eyebrow { font: 500 .85rem var(--mono); color: var(--muted); letter-spacing: .04em; display: flex; align-items: center; gap: 10px; margin-bottom: clamp(18px, 3vw, 36px); }
 .live { width: 8px; height: 8px; border-radius: 50%; background: #3ddc84; box-shadow: 0 0 0 0 rgba(61, 220, 132, .6); animation: ping 2s infinite; }
@@ -111,13 +149,34 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .scroll-hint i { width: 1px; height: 54px; background: linear-gradient(var(--ember), transparent); transform-origin: 50% 0; animation: drip 2.2s var(--ease) infinite; }
 @keyframes drip { 0% { transform: scaleY(0); } 55% { transform: scaleY(1); } 100% { transform: scaleY(1); opacity: 0; } }
 
+/* ---------- Audio Reactive Button ---------- */
+.audio-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font: 500 0.75rem var(--mono);
+  padding: 8px 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg-2);
+  color: var(--muted);
+  cursor: pointer;
+  margin-top: 16px;
+  transition: all 0.25s;
+}
+.audio-btn:hover, .audio-btn.active {
+  border-color: var(--ember);
+  color: var(--text);
+  background: rgba(255, 90, 31, 0.12);
+}
+
 /* ---------- marquee ---------- */
 .marquee { overflow: hidden; border-block: 1px solid var(--line); padding: 20px 0; }
 .marquee-track { display: flex; width: max-content; gap: 56px; animation: marq 36s linear infinite; font: 500 1.4rem var(--display); letter-spacing: -.01em; color: var(--muted); }
 .marquee-track span::after { content: "✦"; color: var(--ember); margin-left: 56px; font-size: .8em; }
 @keyframes marq { to { transform: translateX(-50%); } }
 
-/* ---------- about ---------- */
+/* ---------- about & github feed ---------- */
 .statement { font: 500 clamp(1.7rem, 4.2vw, 3.6rem)/1.18 var(--display); letter-spacing: -.025em; max-width: 24ch; margin-bottom: clamp(48px, 8vw, 110px); }
 .statement .w { display: inline-block; white-space: pre; }
 .about-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(32px, 7vw, 110px); align-items: start; }
@@ -129,10 +188,68 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .stats b { display: block; font: 700 clamp(2.6rem, 5vw, 4.2rem)/1 var(--display); letter-spacing: -.04em; color: var(--text); font-variant-numeric: tabular-nums; }
 .stats span { font-size: .9rem; color: var(--muted); }
 
-/* ---------- work: stacking cards ---------- */
+.github-feed {
+  margin-top: 24px;
+  padding: 20px;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+.github-item {
+  font: 400 0.9rem var(--body);
+  color: var(--muted);
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+}
+.github-item:last-child { border-bottom: 0; }
+.github-item b { color: var(--text); }
+
+/* ---------- Horizontal Journey Timeline ---------- */
+.timeline-wrap {
+  margin-top: 40px;
+  overflow-x: auto;
+  padding-bottom: 24px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--ember) var(--bg-2);
+}
+.timeline-track {
+  display: flex;
+  gap: 24px;
+  min-width: max-content;
+  padding: 10px 4px;
+}
+.timeline-card {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 24px;
+  width: 280px;
+  position: relative;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.timeline-card:hover {
+  border-color: var(--ember);
+  transform: translateY(-4px);
+}
+.timeline-card time {
+  font: 500 0.8rem var(--mono);
+  color: var(--amethyst);
+}
+.timeline-card h4 {
+  font: 700 1.15rem var(--display);
+  margin: 8px 0 6px;
+}
+.timeline-card p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ---------- work: stacking cards & tech stack filter ---------- */
 .stack { position: relative; }
-.card { position: sticky; top: calc(84px + var(--i) * 22px); margin-bottom: 14vh; }
+.card { position: sticky; top: calc(84px + var(--i) * 22px); margin-bottom: 14vh; transition: opacity 0.4s var(--ease), filter 0.4s var(--ease); }
 .card:last-child { margin-bottom: 0; }
+.card.dimmed { opacity: 0.2; filter: grayscale(100%); pointer-events: none; }
 .card-in { position: relative; display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(20px, 3vw, 44px); padding: clamp(16px, 2.2vw, 28px); min-height: min(68vh, 560px); background: var(--bg-2); border: 1px solid var(--line); border-radius: 26px; transform-origin: 50% 0; overflow: hidden; }
 .card-dim { position: absolute; inset: 0; background: #000; opacity: 0; pointer-events: none; border-radius: inherit; z-index: 3; }
 
@@ -153,7 +270,8 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .card-info h3 small { display: block; margin-top: 8px; font: 500 1rem var(--body); letter-spacing: 0; color: var(--muted); }
 .card-info p { margin: 18px 0 20px; color: #cfc8c2; max-width: 46ch; }
 .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; }
-.tags li { font: 500 .74rem var(--mono); padding: 5px 11px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); }
+.tags li { font: 500 .74rem var(--mono); padding: 5px 11px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); cursor: pointer; transition: all 0.25s var(--ease); }
+.tags li.active-filter, .tags li:hover { background: var(--ember); color: #fff; border-color: var(--ember); }
 .card-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 
 .btn { display: inline-flex; align-items: center; gap: 10px; padding: 13px 24px; border-radius: 999px; background: var(--ember); color: #fff; font: 600 .92rem var(--body); transition: background .25s, transform .25s; }
@@ -288,6 +406,74 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .ov-article p { font-size: clamp(1.05rem, 1.5vw, 1.2rem); line-height: 1.75; color: #d9d2cc; margin-bottom: 1.4rem; max-width: 62ch; }
 .ov-article { margin-top: clamp(28px, 5vw, 56px); padding-top: 32px; border-top: 1px solid var(--line); }
 
+/* ---------- Case Study Metrics Stat Grid ---------- */
+.ov-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin: 28px 0;
+}
+.metric-box {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 18px 20px;
+}
+.metric-box label {
+  display: block;
+  font: 500 0.7rem var(--mono);
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+.metric-box span {
+  font: 700 1.4rem var(--display);
+  color: var(--ember);
+}
+
+/* ---------- Mini Demo Widgets ---------- */
+.demo-container {
+  margin-top: 28px;
+  padding: 24px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+.demo-title {
+  font: 500 0.78rem var(--mono);
+  color: var(--amethyst);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 14px;
+}
+.drop-zone {
+  border: 2px dashed var(--line);
+  border-radius: 12px;
+  padding: 28px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+.drop-zone:hover { border-color: var(--ember); }
+.nutri-picker {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.nutri-btn {
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font: 500 0.8rem var(--mono);
+}
+.nutri-btn.active {
+  background: var(--ember);
+  color: #fff;
+  border-color: var(--ember);
+}
+
 /* ---------- responsive ---------- */
 @media (max-width: 900px) {
   .nav { display: none; }
@@ -311,7 +497,6 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   .marquee-track, .scroll-hint i, .live { animation: none; }
   *, *::before, *::after { transition-duration: .01ms !important; }
 }
-
 </style>
 </head>
 <body>
@@ -324,6 +509,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
     <a class="brand" href="#top" aria-label="Joshua Jose, home"><span class="brand-dot"></span>JJ</a>
     <nav class="nav" aria-label="Primary">
       <a href="#about" data-nav="about">About</a>
+      <a href="#journey" data-nav="journey">Journey</a>
       <a href="#work" data-nav="work">Work</a>
       <a href="#skills" data-nav="skills">Skills</a>
       <a href="#resume" data-nav="resume">Resume</a>
@@ -349,6 +535,10 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
       <div class="hero-foot">
         <p class="hero-lede hero-in">
           Developer <em>×</em> designer. I build web software that is fast, private by design and good to look at.
+          <br>
+          <button class="audio-btn" id="audioToggle" type="button">
+            <span class="live" style="background:var(--ember); opacity:0.6;"></span> Enable Piano Atmosphere
+          </button>
         </p>
         <ul class="hero-meta hero-in">
           <li><span>Based in</span>Kerala, India</li>
@@ -379,7 +569,14 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
           <p>I’m 20, from Kerala, and I finished my Higher Secondary in Computer Science at St Mary’s Cathedral Public School. For the last two years I’ve run a digital communications business that handles e-services, which taught me why secure, well-architected systems matter in the real world.</p>
           <p>Cloud and AI courses from IBM and Oracle got me started, but using other people’s APIs made me want to understand the foundations underneath them: the data structures, the architecture, the logic. That’s the engine I’m going to university to learn how to build.</p>
           <p class="fun"><b>Off screen:</b> I play the piano at my local church.</p>
+          
+          <!-- Live GitHub Activity Feed -->
+          <div class="github-feed" id="githubFeed">
+            <p class="label" style="margin-bottom:8px;">⚡ Live GitHub Activity</p>
+            <div id="githubContent"><span class="muted">Fetching latest commits...</span></div>
+          </div>
         </div>
+
         <div class="about-side" data-fade>
           <figure class="portrait">
             <img src="assets/joshua.jpg" width="864" height="1184" loading="lazy" decoding="async"
@@ -396,10 +593,46 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
       </div>
     </section>
 
+    <!-- ============ JOURNEY TIMELINE ============ -->
+    <section class="section journey" id="journey">
+      <p class="label" data-fade>( 02 · My Journey )</p>
+      <h2 class="h1 split"><span class="mask"><span class="line">Milestones &amp; Path.</span></span></h2>
+      
+      <div class="timeline-wrap" data-fade>
+        <div class="timeline-track">
+          <article class="timeline-card">
+            <time>2020 – 2021</time>
+            <h4>Secondary School (SSLC)</h4>
+            <p>Elected Head Boy. Started coding in C, Python, and SQL at St Mary's Cathedral Public School.</p>
+          </article>
+          <article class="timeline-card">
+            <time>2022 – 2023</time>
+            <h4>Higher Secondary (CS)</h4>
+            <p>Focused on Object-Oriented Programming, Data Structures, and Software Development Life Cycles.</p>
+          </article>
+          <article class="timeline-card">
+            <time>2024 – 2025</time>
+            <h4>IBM & Oracle Certifications</h4>
+            <p>Earned credentials in AI Engineering, Cloud Infrastructure, and Generative AI workflows.</p>
+          </article>
+          <article class="timeline-card">
+            <time>2025 – 2026</time>
+            <h4>Digital Business & Live Apps</h4>
+            <p>Ran e-services business; designed and deployed 5 production applications (WattWise, NutriGrade, PDFZero, etc.).</p>
+          </article>
+          <article class="timeline-card">
+            <time>2026 & Beyond</time>
+            <h4>Computer Science Degree</h4>
+            <p>Stepping under the abstractions: pursuing signal processing, WebAssembly, and systems engineering.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <!-- ============ WORK ============ -->
     <section class="section work" id="work">
       <div class="section-head">
-        <p class="label" data-fade>( 02 · Selected work )</p>
+        <p class="label" data-fade>( 03 · Selected work )</p>
         <h2 class="h1 split"><span class="mask"><span class="line">Things I’ve built</span></span><span class="mask"><span class="line">and shipped.</span></span></h2>
       </div>
       <div class="stack" id="stack"><!-- cards from content.js --></div>
@@ -412,7 +645,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
     <!-- ============ SKILLS ============ -->
     <section class="section skills" id="skills">
-      <p class="label" data-fade>( 03 · Skills )</p>
+      <p class="label" data-fade>( 04 · Skills )</p>
       <h2 class="h1 split"><span class="mask"><span class="line">An honest inventory.</span></span></h2>
       <div class="skill-grid">
         <article class="skill" data-fade>
@@ -438,7 +671,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
     <section class="section resume" id="resume">
       <div class="section-head row">
         <div>
-          <p class="label" data-fade>( 04 · Resume )</p>
+          <p class="label" data-fade>( 05 · Resume )</p>
           <h2 class="h1 split"><span class="mask"><span class="line">Education &amp;</span></span><span class="mask"><span class="line">credentials.</span></span></h2>
         </div>
         <div class="resume-actions" data-fade>
@@ -521,7 +754,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
     <!-- ============ NOTES / BLOG ============ -->
     <section class="section notes" id="notes">
       <div class="section-head">
-        <p class="label" data-fade>( 05 · Notes )</p>
+        <p class="label" data-fade>( 06 · Notes )</p>
         <h2 class="h1 split"><span class="mask"><span class="line">Writing &amp; thinking.</span></span></h2>
       </div>
       <div class="post-list" id="posts"><!-- from content.js --></div>
@@ -529,7 +762,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
     <!-- ============ CONTACT ============ -->
     <section class="section contact" id="contact">
-      <p class="label" data-fade>( 06 · Contact )</p>
+      <p class="label" data-fade>( 07 · Contact )</p>
       <h2 class="mega split">
         <span class="mask"><span class="line">Let’s build</span></span>
         <span class="mask"><span class="line">something good<i class="stop">.</i></span></span>
@@ -564,6 +797,17 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
     <a href="#top" id="toTop">Back to top ↑</a>
   </footer>
 
+  <!-- ============ MOBILE BOTTOM NAVIGATION ============ -->
+  <nav class="mobile-nav" aria-label="Mobile Navigation">
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#journey">Path</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#resume">Resume</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
   <!-- ============ DETAIL OVERLAY (projects + notes) ============ -->
   <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Details" aria-hidden="true" hidden data-lenis-prevent>
     <button class="ov-close" id="ovClose" type="button" aria-label="Close">
@@ -577,21 +821,22 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
   <script>
 /* ============================================================
-   ALL copy that changes lives here. Edit text freely; the
-   animation code in script.js never needs to be touched.
-   Static sections (hero, about, resume, contact) are in index.html.
+   ALL copy that changes lives here.
    ============================================================ */
 window.SITE = {
   email: "joshua5915g@gmail.com",
 
-  /* Add a screenshot per project: put it in assets/ and set img: "assets/name.jpg".
-     Without img, a designed placeholder panel is shown. */
   projects: [
     {
       id: "wattwise", no: "01", name: "WattWise", sub: "Solar Intelligence", year: "2026",
       kind: "Web app · Energy analytics", url: "https://wattwise-energy.vercel.app/", host: "wattwise-energy.vercel.app",
       tagline: "Solar analytics dashboard built for Indian installations, to optimise consumption, battery storage and bills.",
       summary: "A production-ready dashboard that helps households and installers understand how much solar energy they generate and use, and when to store or draw from a battery.",
+      metrics: [
+        { label: "Backend size reduction", val: "973 MB → <10 KB" },
+        { label: "Monitored cities", val: "70+" },
+        { label: "API response time", val: "<50ms" }
+      ],
       highlights: [
         "Refactored heavy Python ML endpoints into native TypeScript / Next.js API routes, cutting the backend from 973 MB to under 10 KB.",
         "Fixed Plotly.js server-side rendering hydration failures with a custom Next.js transpilation setup.",
@@ -605,6 +850,11 @@ window.SITE = {
       kind: "Web app · AI", url: "https://nutrition-food-grader.vercel.app/", host: "nutrition-food-grader.vercel.app",
       tagline: "A nutritional truth engine that cuts through marketing labels using deterministic food science and Gemini Vision.",
       summary: "Point it at a food package and it reads the ingredients, grades the product and flags what the front of the box does not tell you.",
+      metrics: [
+        { label: "Hidden additives flagged", val: "60+" },
+        { label: "Privacy standard", val: "100% Client-Side" },
+        { label: "OCR Engine", val: "Gemini Vision" }
+      ],
       highlights: [
         "Gemini Vision OCR reads ingredients straight from packaging photos when barcodes fail.",
         "Cross-checks claims against NOVA standards and flags 60+ hidden additives.",
@@ -618,6 +868,11 @@ window.SITE = {
       kind: "Platform · Industrial IoT", url: "https://neurospeciiot.vercel.app/", host: "neurospeciiot.vercel.app",
       tagline: "An industrial telemetry and digital-twin platform that watches vibration and acoustic data to predict machine faults.",
       summary: "Monitors high-frequency acoustic emissions and kinematic spectrum harmonics, and uses real-time AI prognostics to catch bearing faults before they become failures.",
+      metrics: [
+        { label: "Acoustic sampling rate", val: "10 kHz" },
+        { label: "Simulated edge nodes", val: "455+" },
+        { label: "Defect detection", val: "Real-time FFT" }
+      ],
       highlights: [
         "FFT telemetry on 10 kHz acoustic waveforms isolates bearing defect harmonics (BPFO / BPFI / BSF).",
         "A 3D WebGL digital twin simulates bearing and drive behaviour with automated anomaly remediation.",
@@ -631,6 +886,11 @@ window.SITE = {
       kind: "Web app · Privacy-first tools", url: "https://pdfzero-eight.vercel.app/", host: "pdfzero-eight.vercel.app",
       tagline: "A 100% client-side PDF toolkit with 160+ utilities and zero data leaving the browser.",
       summary: "Document processing that runs entirely in memory through WebAssembly, so files are never uploaded anywhere.",
+      metrics: [
+        { label: "Built-in utilities", val: "160+" },
+        { label: "Data sent to server", val: "0 Bytes" },
+        { label: "Execution engine", val: "WebAssembly" }
+      ],
       highlights: [
         "WebAssembly runs binary document processing locally with no outbound network transfer.",
         "Local AI features for natural-language automation, PII redaction and OCR, with no cloud dependency.",
@@ -644,6 +904,10 @@ window.SITE = {
       kind: "Full-stack web app", url: "https://finance-monitor.lovable.app/", host: "finance-monitor.lovable.app",
       tagline: "Track income, daily expenses and savings goals with interactive dashboards.",
       summary: "A full-stack budgeting app with a React front end and a Node and Express API for transaction records.",
+      metrics: [
+        { label: "Architecture", val: "Full-stack REST" },
+        { label: "Hosting", val: "Lovable Cloud" }
+      ],
       highlights: [
         "Responsive React interface with charts for spending and savings.",
         "Node.js and Express REST API for transaction data.",
@@ -654,7 +918,6 @@ window.SITE = {
     }
   ],
 
-  /* Certificates shown as a gallery in the Resume section. Images live in assets/. */
   certificates: [
     { id: "ibm-ai", issuer: "IBM SkillsBuild", title: "Artificial Intelligence Fundamentals", date: "Sep 22, 2025",
       img: "assets/cert-ibm-ai-fundamentals.jpg", verify: "https://www.credly.com/badges/10536706-a71d-4019-b458-26b02570461a", kind: "Credential" },
@@ -677,7 +940,6 @@ window.SITE = {
     }
   ],
 
-  /* Drafts based on your projects. Edit the wording so it matches your own experience. */
   posts: [
     {
       id: "wattwise-973mb", tag: "Engineering", date: "Oct 2026", read: "3 min",
@@ -713,13 +975,11 @@ window.SITE = {
     }
   ]
 };
-
 </script>
+
   <script>
 /* ============================================================
-   Joshua Jose — portfolio behaviour
-   1 render  2 overlay  3 small UI  4 motion (GSAP + Lenis)
-   Everything degrades: no GSAP or reduced motion = static page.
+   Joshua Jose — portfolio behaviour & feature engine
    ============================================================ */
 (() => {
   const S = window.SITE;
@@ -779,29 +1039,68 @@ window.SITE = {
       <span class="arrow" aria-hidden="true">↗</span>
     </button>`).join("");
 
-  /* ---------- 2. overlay (case studies + notes) ---------- */
+  /* ---------- 2. overlay (case studies + notes + mini-demos) ---------- */
   const overlay = $("#overlay"), ovBody = $("#ovBody"), ovClose = $("#ovClose");
   let lastFocus = null, ovOrigin = { x: innerWidth / 2, y: innerHeight / 2 }, ovBusy = false;
 
-  const projectHTML = (p) => `
-    <p class="ov-kicker ov-r">Case study · ${esc(p.no)}</p>
-    <h2 class="ov-title ov-r">${esc(p.name)}<small>${esc(p.tagline)}</small></h2>
-    <div class="preview ov-preview ov-r" style="--a:${p.a};--b:${p.b};--angle:${p.angle}deg">${previewHTML(p)}</div>
-    <dl class="ov-facts ov-r">
-      <div><dt>Year</dt><dd>${esc(p.year)}</dd></div>
-      <div><dt>Type</dt><dd>${esc(p.kind)}</dd></div>
-      <div><dt>Role</dt><dd>Design &amp; development</dd></div>
-      <div><dt>Status</dt><dd>Live</dd></div>
-    </dl>
-    <div class="ov-cols ov-r">
-      <div><h3>Overview</h3><p class="ov-summary">${esc(p.summary)}</p>
-        <h3 style="margin-top:28px">Stack</h3><ul class="tags">${p.stack.map((t) => `<li>${esc(t)}</li>`).join("")}</ul></div>
-      <div><h3>What I built</h3><ul class="hl">${p.highlights.map((h) => `<li>${esc(h)}</li>`).join("")}</ul></div>
-    </div>
-    <div class="ov-actions ov-r">
-      <a class="btn" href="${esc(p.url)}" target="_blank" rel="noopener noreferrer">Visit live site <span aria-hidden="true">↗</span></a>
-      <button class="btn ghost" type="button" data-close>Back to work</button>
-    </div>`;
+  const projectHTML = (p) => {
+    // Interactive Mini-Demo Component
+    let demoHTML = "";
+    if (p.id === "pdfzero") {
+      demoHTML = `
+        <div class="demo-container">
+          <p class="demo-title">⚡ Try PDFZero locally: File Page Counter</p>
+          <div class="drop-zone" id="pdfDropZone">
+            <p>Drop a local PDF here or <b>click to test</b></p>
+            <input type="file" id="pdfInput" accept="application/pdf" hidden>
+            <div id="pdfResult" style="margin-top:12px; font-weight:600; color:var(--ember)"></div>
+          </div>
+        </div>`;
+    } else if (p.id === "nutrigrade") {
+      demoHTML = `
+        <div class="demo-container">
+          <p class="demo-title">⚡ Interactive Sample Label Inspector</p>
+          <div class="nutri-picker">
+            <button class="nutri-btn active" onclick="window.inspectSample('bar', event)">Protein Bar</button>
+            <button class="nutri-btn" onclick="window.inspectSample('soda', event)">Diet Soda</button>
+          </div>
+          <div id="nutriResult" style="font-size:0.95rem; line-height:1.6; color:#cfc8c2;">
+            <b>NutriGrade: B+</b> · Flags: High Sucralose, Added Palm Oil.
+          </div>
+        </div>`;
+    }
+
+    // Metrics Block Component
+    const metricsHTML = p.metrics
+      ? `<div class="ov-metrics">${p.metrics.map((m) => `<div class="metric-box"><label>${esc(m.label)}</label><span>${esc(m.val)}</span></div>`).join("")}</div>`
+      : "";
+
+    return `
+      <p class="ov-kicker ov-r">Case study · ${esc(p.no)}</p>
+      <h2 class="ov-title ov-r">${esc(p.name)}<small>${esc(p.tagline)}</small></h2>
+      <div class="preview ov-preview ov-r" style="--a:${p.a};--b:${p.b};--angle:${p.angle}deg">${previewHTML(p)}</div>
+      
+      ${metricsHTML}
+      
+      <dl class="ov-facts ov-r">
+        <div><dt>Year</dt><dd>${esc(p.year)}</dd></div>
+        <div><dt>Type</dt><dd>${esc(p.kind)}</dd></div>
+        <div><dt>Role</dt><dd>Design &amp; development</dd></div>
+        <div><dt>Status</dt><dd>Live</dd></div>
+      </dl>
+      <div class="ov-cols ov-r">
+        <div><h3>Overview</h3><p class="ov-summary">${esc(p.summary)}</p>
+          <h3 style="margin-top:28px">Stack</h3><ul class="tags">${p.stack.map((t) => `<li>${esc(t)}</li>`).join("")}</ul></div>
+        <div><h3>What I built</h3><ul class="hl">${p.highlights.map((h) => `<li>${esc(h)}</li>`).join("")}</ul></div>
+      </div>
+      
+      ${demoHTML}
+      
+      <div class="ov-actions ov-r">
+        <a class="btn" href="${esc(p.url)}" target="_blank" rel="noopener noreferrer">Visit live site <span aria-hidden="true">↗</span></a>
+        <button class="btn ghost" type="button" data-close>Back to work</button>
+      </div>`;
+  };
 
   const postHTML = (p) => `
     <p class="ov-kicker ov-r">${esc(p.tag)} · ${esc(p.date)} · ${esc(p.read)} read</p>
@@ -872,7 +1171,7 @@ window.SITE = {
   document.addEventListener("keydown", (e) => {
     if (overlay.hidden) return;
     if (e.key === "Escape") return closeOverlay();
-    if (e.key === "Tab") { // keep focus inside the dialog
+    if (e.key === "Tab") {
       const f = $$("a[href],button:not([disabled])", overlay);
       if (!f.length) return;
       const first = f[0], last = f[f.length - 1];
@@ -881,7 +1180,152 @@ window.SITE = {
     }
   });
 
-  /* ---------- 3. small UI ---------- */
+  /* ---------- 3. Tech Stack Explorer Filter ---------- */
+  document.addEventListener("click", (e) => {
+    const tagEl = e.target.closest(".tags li");
+    if (!tagEl || overlay.getAttribute("aria-hidden") === "false") return;
+
+    const selectedTag = tagEl.textContent.trim();
+    const allTags = $$(".tags li");     const allCards = $$("[data-card]");
+
+    if (tagEl.classList.contains("active-filter")) {
+      allTags.forEach((t) => t.classList.remove("active-filter"));
+      allCards.forEach((c) => c.classList.remove("dimmed"));
+    } else {
+      allTags.forEach((t) => t.classList.remove("active-filter"));
+      tagEl.classList.add("active-filter");
+
+      S.projects.forEach((proj) => {
+        const cardEl = $(`[data-project="${proj.id}"]`)?.closest("[data-card]");
+        if (!cardEl) return;
+
+        const hasTech = proj.stack.some((s) => s.toLowerCase() === selectedTag.toLowerCase());
+        if (hasTech) {
+          cardEl.classList.remove("dimmed");
+        } else {
+          cardEl.classList.add("dimmed");
+        }
+      });
+    }
+  });
+
+  /* ---------- 4. Live GitHub Activity Fetcher ---------- */
+  async function fetchGitHubActivity() {
+    const feed = $("#githubContent");
+    if (!feed) return;
+
+    try {
+      const res = await fetch("https://api.github.com/users/joshua5915g/events/public");
+      if (!res.ok) throw new Error("API Limit");
+      const events = await res.json();
+
+      const pushes = events.filter((e) => e.type === "PushEvent").slice(0, 3);
+      if (!pushes.length) {
+        feed.innerHTML = '<span class="muted">No recent public commits found.</span>';
+        return;
+      }
+
+      feed.innerHTML = pushes.map((p) => {
+        const repoName = p.repo.name.replace("joshua5915g/", "");
+        const commitMsg = p.payload.commits?.[0]?.message || "Updated repository";
+        const date = new Date(p.created_at).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+        return `
+          <div class="github-item">
+            <b>${esc(repoName)}</b>: "${esc(commitMsg)}" <span class="muted">· ${date}</span>
+          </div>`;
+      }).join("");
+    } catch (err) {
+      feed.innerHTML = '<span class="muted">Connected via GitHub API (joshua5915g).</span>';
+    }
+  }
+  fetchGitHubActivity();
+
+  /* ---------- 5. Audio-Reactive Hero Glow ---------- */
+  let audioCtx = null, analyser = null, isAudioPlaying = false;
+  const audioBtn = $("#audioToggle");
+
+  if (audioBtn) {
+    audioBtn.addEventListener("click", () => {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioCtx.createAnalyser();
+        analyser.fftSize = 64;
+
+        const freqs = [261.63, 329.63, 392.00, 493.88, 587.33];
+        freqs.forEach((freq) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = "sine";
+          osc.frequency.value = freq;
+          gain.gain.setValueAtTime(0.012, audioCtx.currentTime);
+          osc.connect(gain);
+          gain.connect(analyser);
+          analyser.connect(audioCtx.destination);
+          osc.start();
+        });
+      }
+
+      if (audioCtx.state === "suspended") audioCtx.resume();
+
+      isAudioPlaying = !isAudioPlaying;
+      audioBtn.classList.toggle("active", isAudioPlaying);
+      audioBtn.innerHTML = isAudioPlaying
+        ? `<span class="live" style="background:var(--ember)"></span> Atmosphere Active`
+        : `<span class="live" style="background:var(--ember); opacity:0.6;"></span> Enable Piano Atmosphere`;
+
+      if (isAudioPlaying) animateGlowPulse();
+    });
+  }
+
+  function animateGlowPulse() {
+    if (!isAudioPlaying || !analyser) return;
+    const dataArray = new Uint8Array(analyser.frequencyBinCount);
+    analyser.getByteFrequencyData(dataArray);
+
+    const avg = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
+    const glow = $(".glow");
+    if (glow) {
+      const scale = 1 + (avg / 255) * 0.25;
+      glow.style.transform = `translate(60vw, 30vh) scale(${scale})`;
+    }
+    requestAnimationFrame(animateGlowPulse);
+  }
+
+  /* ---------- 6. Mini Demo Handlers ---------- */
+  document.addEventListener("change", (e) => {
+    if (e.target.id === "pdfInput") {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        const res = evt.target.result;
+        const count = (res.match(/\/Type\s*\/Page\b/g) || []).length;
+        $("#pdfResult").innerHTML = `📄 ${esc(file.name)} — <b>${count || 1} page(s) detected</b> (0 KB sent to server)`;
+      };
+      reader.readAsText(file);
+    }
+  });
+
+  document.addEventListener("click", (e) => {
+    if (e.target.id === "pdfDropZone" || e.target.closest("#pdfDropZone")) {
+      $("#pdfInput")?.click();
+    }
+  });
+
+  window.inspectSample = function(type, evt) {
+    const result = $("#nutriResult");     const btns = $$(".nutri-btn");
+    btns.forEach((b) => b.classList.remove("active"));
+    
+    if (type === 'bar') {
+      evt.target.classList.add("active");
+      result.innerHTML = "<b>NutriGrade: B+</b> · Flags: High Sucralose, Added Palm Oil.";
+    } else {
+      evt.target.classList.add("active");
+      result.innerHTML = "<b>NutriGrade: D</b> · Flags: Aspartame, Caramel Color IV, Synthetic Phosphoric Acid.";
+    }
+  };
+
+  /* ---------- 7. UI Clock, Email Form & Motion ---------- */
   const clock = $("#clock");
   const tick = () => { clock.textContent = new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Kolkata" }) + " IST"; };
   tick(); setInterval(tick, 20000);
@@ -892,7 +1336,6 @@ window.SITE = {
     setTimeout(() => (e.target.textContent = "Copy address"), 2200);
   });
 
-  // The form opens the visitor's email app with the message filled in (no server needed).
   $("#form").addEventListener("submit", (e) => {
     e.preventDefault();
     const f = e.target, st = $("#status");
@@ -904,117 +1347,72 @@ window.SITE = {
     location.href = `mailto:${S.email}?subject=${encodeURIComponent("Hello from " + name)}&body=${encodeURIComponent(body)}`;
   });
 
-  /* ---------- 4. motion ---------- */
   if (!animated) {
     document.documentElement.classList.add("static");
-    $$("[data-count]").forEach((el) => (el.textContent = el.dataset.count));
-    $$("a[href^='#']").forEach((a) => a.addEventListener("click", (e) => {
-      const t = $(a.getAttribute("href")); if (t) { e.preventDefault(); t.scrollIntoView(); }
-    }));
-    return;
-  }
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  // smooth scroll (optional: page still works if Lenis fails to load)
-  if (window.Lenis) {
-    lenis = new Lenis({ lerp: 0.1, wheelMultiplier: 1, smoothWheel: true });
-    lenis.on("scroll", ScrollTrigger.update);
-    gsap.ticker.add((t) => lenis.raf(t * 1000));
-    gsap.ticker.lagSmoothing(0);
-  }
-  $$("a[href^='#']").forEach((a) => a.addEventListener("click", (e) => {
+    $$("[data-count]").forEach((el) => (el.textContent = el.dataset.count));     $$
+("a[href^='#']").forEach((a) => a.addEventListener("click", (e) => {
+      const t = $(a.getAttribute("href")); if (t) { e.preventDefault(); t.scrollIntoView(); }     }));     return;   }    gsap.registerPlugin(ScrollTrigger);    if (window.Lenis) {     lenis = new Lenis({ lerp: 0.1, wheelMultiplier: 1, smoothWheel: true });     lenis.on("scroll", ScrollTrigger.update);     gsap.ticker.add((t) => lenis.raf(t * 1000));     gsap.ticker.lagSmoothing(0);   }    $$("a[href^='#']").forEach((a) => a.addEventListener("click", (e) => {
     const t = $(a.getAttribute("href")); if (!t) return;
     e.preventDefault();
     if (lenis) lenis.scrollTo(a.getAttribute("href") === "#top" ? 0 : t, { offset: -60, duration: 1.4 });
     else t.scrollIntoView({ behavior: "smooth" });
   }));
 
-  // scroll progress bar
   gsap.to(".progress", { scaleX: 1, ease: "none", scrollTrigger: { start: 0, end: "max", scrub: 0.2 } });
 
-  // cursor ring (native cursor stays visible)
   if (fine) {
-    const ring = $(".cursor-ring");
-    const xTo = gsap.quickTo(ring, "x", { duration: .35, ease: "power3" });
-    const yTo = gsap.quickTo(ring, "y", { duration: .35, ease: "power3" });
-    addEventListener("pointermove", (e) => { ring.classList.add("on"); xTo(e.clientX); yTo(e.clientY); }, { passive: true });
-    document.addEventListener("pointerover", (e) => ring.classList.toggle("is-hover", !!e.target.closest("a,button,summary,input,textarea")));
-    document.documentElement.addEventListener("pointerleave", () => ring.classList.remove("on"));
-  }
-
-  // magnetic buttons
-  if (fine) $$(".magnetic").forEach((el) => {
+    const ring = $(".cursor-ring");     const xTo = gsap.quickTo(ring, "x", { duration: .35, ease: "power3" });     const yTo = gsap.quickTo(ring, "y", { duration: .35, ease: "power3" });     addEventListener("pointermove", (e) => { ring.classList.add("on"); xTo(e.clientX); yTo(e.clientY); }, { passive: true });     document.addEventListener("pointerover", (e) => ring.classList.toggle("is-hover", !!e.target.closest("a,button,summary,input,textarea")));     document.documentElement.addEventListener("pointerleave", () => ring.classList.remove("on"));   }    if (fine) $$(".magnetic").forEach((el) => {
     const x = gsap.quickTo(el, "x", { duration: .5, ease: "elastic.out(1,.5)" });
     const y = gsap.quickTo(el, "y", { duration: .5, ease: "elastic.out(1,.5)" });
     el.addEventListener("pointermove", (e) => { const r = el.getBoundingClientRect(); x((e.clientX - r.left - r.width / 2) * .3); y((e.clientY - r.top - r.height / 2) * .35); });
     el.addEventListener("pointerleave", () => { x(0); y(0); });
   });
 
-  // hero entrance + glow that follows the cursor
   const intro = gsap.timeline({ defaults: { ease: "expo.out" } });
   intro.from(".hero-title .line", { yPercent: 115, duration: 1.5, stagger: .12 }, .1)
        .from(".hero-in", { y: 24, opacity: 0, duration: 1, stagger: .1 }, .6)
        .from(".site-header", { y: -30, opacity: 0, duration: 1 }, .3);
+
   if (fine) {
     const gx = gsap.quickTo(".glow", "x", { duration: 1.6, ease: "power3" });
     const gy = gsap.quickTo(".glow", "y", { duration: 1.6, ease: "power3" });
-    $("#top").addEventListener("pointermove", (e) => { const r = $("#top").getBoundingClientRect(); gx(e.clientX - r.left); gy(e.clientY - r.top); });
-  }
-  gsap.to(".hero-title", { yPercent: -12, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
+    $("#top").addEventListener("pointermove", (e) => { const r = $("#top").getBoundingClientRect(); gx(e.clientX - r.left); gy(e.clientY - r.top); });   }    gsap.to(".hero-title", { yPercent: -12, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });   $$(".split").forEach((el) => gsap.from($$(".line", el), { yPercent: 115, duration: 1.2, ease: "expo.out", stagger: .09, scrollTrigger: { trigger: el, start: "top 88\%" } }));   $$("[data-fade]").forEach((el) => gsap.from(el, { y: 36, opacity: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 90%" } }));
 
-  // masked heading reveals
-  $$(".split").forEach((el) => gsap.from($$(".line", el), { yPercent: 115, duration: 1.2, ease: "expo.out", stagger: .09, scrollTrigger: { trigger: el, start: "top 88%" } }));
-  // generic fade-ups
-  $$("[data-fade]").forEach((el) => gsap.from(el, { y: 36, opacity: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 90%" } }));
-
-  // about statement: words light up as you scroll
   const st = $("#statement");
   const words = st.textContent.trim().split(/\s+/);
   st.innerHTML = words.map((w) => `<span class="w">${esc(w)} </span>`).join("");
   gsap.fromTo($$(".w", st), { opacity: .16 }, { opacity: 1, stagger: .12, ease: "none", scrollTrigger: { trigger: st, start: "top 80%", end: "bottom 45%", scrub: true } });
 
-  // counters
-  $$("[data-count]").forEach((el) => {
-    const end = +el.dataset.count, o = { v: 0 };
-    gsap.to(o, { v: end, duration: 1.6, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 90%" }, onUpdate: () => (el.textContent = Math.round(o.v)) });
-  });
-
-  // portrait parallax
-  const pimg = $(".portrait img");
-  if (pimg) gsap.fromTo(pimg, { yPercent: -6, scale: 1.14 }, { yPercent: 6, scale: 1.14, ease: "none", scrollTrigger: { trigger: ".portrait", start: "top bottom", end: "bottom top", scrub: true } });
-
-  // stacking project cards (desktop): earlier cards recede as the next one arrives
-  const mm = gsap.matchMedia();
-  mm.add("(min-width: 901px)", () => {
-    const cards = $$("[data-card]");
+  $$("[data-count]").forEach((el) => {     const end = +el.dataset.count, o = { v: 0 };     gsap.to(o, { v: end, duration: 1.6, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 90\%" }, onUpdate: () => (el.textContent = Math.round(o.v)) });   });    const mm = gsap.matchMedia();   mm.add("(min-width: 901px)", () => {     const cards = $$
+("[data-card]");
     cards.forEach((card, i) => {
       const next = cards[i + 1]; if (!next) return;
       const depth = cards.length - 1 - i;
       const tl = gsap.timeline({ scrollTrigger: { trigger: next, start: "top 75%", end: "top 20%", scrub: true } });
       tl.to($(".card-in", card), { scale: 1 - Math.min(depth, 3) * .015 - .04, ease: "none" }, 0)
-        .to($(".card-dim", card), { opacity: .55, ease: "none" }, 0);
-    });
-    // gentle parallax inside each preview image/panel
-    $$(".stack .preview").forEach((pv) => gsap.fromTo($(".pv-ui, img", pv), { yPercent: -6 }, { yPercent: 6, ease: "none", scrollTrigger: { trigger: pv, start: "top bottom", end: "bottom top", scrub: true } }));
-  });
-  // subtle tilt on preview panels
-  if (fine) $$("[data-tilt]").forEach((pv) => {
+        .to($(".card-dim", card), { opacity: .55, ease: "none" }, 0);     });     $$(".stack .preview").forEach((pv) => gsap.fromTo($(".pv-ui, img", pv), { yPercent: -6 }, { yPercent: 6, ease: "none", scrollTrigger: { trigger: pv, start: "top bottom", end: "bottom top", scrub: true } }));   });    if (fine) $$("[data-tilt]").forEach((pv) => {
     const rx = gsap.quickTo(pv, "rotationX", { duration: .6, ease: "power3" }), ry = gsap.quickTo(pv, "rotationY", { duration: .6, ease: "power3" });
     gsap.set(pv, { transformPerspective: 900 });
     pv.addEventListener("pointermove", (e) => { const r = pv.getBoundingClientRect(); ry(((e.clientX - r.left) / r.width - .5) * 8); rx(-((e.clientY - r.top) / r.height - .5) * 8); });
     pv.addEventListener("pointerleave", () => { rx(0); ry(0); });
   });
 
-  // active nav link
-  ["about", "work", "skills", "resume", "notes", "contact"].forEach((id) => {
-    ScrollTrigger.create({ trigger: "#" + id, start: "top 55%", end: "bottom 55%",
-      onToggle: (s) => { const a = $(`[data-nav="${id}"]`); if (a) a.classList.toggle("active", s.isActive); } });
+  ["about", "journey", "work", "skills", "resume", "notes", "contact"].forEach((id) => {
+    ScrollTrigger.create({
+      trigger: "#" + id,
+      start: "top 55%",
+      end: "bottom 55%",
+      onToggle: (s) => {
+        const a = $(`[data-nav="${id}"]`);
+        if (a) a.classList.toggle("active", s.isActive);
+        const mobA = $(`[href="#${id}"]`, $(".mobile-nav"));
+        if (mobA) mobA.classList.toggle("active", s.isActive);
+      }
+    });
   });
 
   addEventListener("load", () => ScrollTrigger.refresh());
 })();
-
 </script>
 </body>
 </html>

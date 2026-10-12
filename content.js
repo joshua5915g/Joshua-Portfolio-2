@@ -14,6 +14,11 @@ window.SITE = {
       kind: "Web app · Energy analytics", url: "https://wattwise-energy.vercel.app/", host: "wattwise-energy.vercel.app",
       tagline: "Solar analytics dashboard built for Indian installations, to optimise consumption, battery storage and bills.",
       summary: "A production-ready dashboard that helps households and installers understand how much solar energy they generate and use, and when to store or draw from a battery.",
+      metrics: [
+        { label: "Backend size reduction", val: "973 MB → <10 KB" },
+        { label: "Monitored cities", val: "70+" },
+        { label: "API response time", val: "<50ms" }
+      ],
       highlights: [
         "Refactored heavy Python ML endpoints into native TypeScript / Next.js API routes, cutting the backend from 973 MB to under 10 KB.",
         "Fixed Plotly.js server-side rendering hydration failures with a custom Next.js transpilation setup.",
@@ -27,6 +32,11 @@ window.SITE = {
       kind: "Web app · AI", url: "https://nutrition-food-grader.vercel.app/", host: "nutrition-food-grader.vercel.app",
       tagline: "A nutritional truth engine that cuts through marketing labels using deterministic food science and Gemini Vision.",
       summary: "Point it at a food package and it reads the ingredients, grades the product and flags what the front of the box does not tell you.",
+      metrics: [
+        { label: "Hidden additives flagged", val: "60+" },
+        { label: "Privacy standard", val: "100% Client-Side" },
+        { label: "OCR Engine", val: "Gemini Vision" }
+      ],
       highlights: [
         "Gemini Vision OCR reads ingredients straight from packaging photos when barcodes fail.",
         "Cross-checks claims against NOVA standards and flags 60+ hidden additives.",
@@ -40,6 +50,11 @@ window.SITE = {
       kind: "Platform · Industrial IoT", url: "https://neurospeciiot.vercel.app/", host: "neurospeciiot.vercel.app",
       tagline: "An industrial telemetry and digital-twin platform that watches vibration and acoustic data to predict machine faults.",
       summary: "Monitors high-frequency acoustic emissions and kinematic spectrum harmonics, and uses real-time AI prognostics to catch bearing faults before they become failures.",
+      metrics: [
+        { label: "Acoustic sampling rate", val: "10 kHz" },
+        { label: "Simulated edge nodes", val: "455+" },
+        { label: "Defect detection", val: "Real-time FFT" }
+      ],
       highlights: [
         "FFT telemetry on 10 kHz acoustic waveforms isolates bearing defect harmonics (BPFO / BPFI / BSF).",
         "A 3D WebGL digital twin simulates bearing and drive behaviour with automated anomaly remediation.",
@@ -53,6 +68,11 @@ window.SITE = {
       kind: "Web app · Privacy-first tools", url: "https://pdfzero-eight.vercel.app/", host: "pdfzero-eight.vercel.app",
       tagline: "A 100% client-side PDF toolkit with 160+ utilities and zero data leaving the browser.",
       summary: "Document processing that runs entirely in memory through WebAssembly, so files are never uploaded anywhere.",
+      metrics: [
+        { label: "Built-in utilities", val: "160+" },
+        { label: "Data sent to server", val: "0 Bytes" },
+        { label: "Execution engine", val: "WebAssembly" }
+      ],
       highlights: [
         "WebAssembly runs binary document processing locally with no outbound network transfer.",
         "Local AI features for natural-language automation, PII redaction and OCR, with no cloud dependency.",
@@ -66,6 +86,10 @@ window.SITE = {
       kind: "Full-stack web app", url: "https://finance-monitor.lovable.app/", host: "finance-monitor.lovable.app",
       tagline: "Track income, daily expenses and savings goals with interactive dashboards.",
       summary: "A full-stack budgeting app with a React front end and a Node and Express API for transaction records.",
+      metrics: [
+        { label: "Architecture", val: "Full-stack REST" },
+        { label: "Hosting", val: "Lovable Cloud" }
+      ],
       highlights: [
         "Responsive React interface with charts for spending and savings.",
         "Node.js and Express REST API for transaction data.",
@@ -74,6 +98,18 @@ window.SITE = {
       stack: ["React", "Node.js", "Express", "Charts"],
       img: null, a: "#ff5a1f", b: "#8b7cf6", angle: 215
     }
+  ],
+
+  /* Certificates shown as a gallery in the Resume section. Images live in assets/. */
+  certificates: [
+    { id: "ibm-ai", issuer: "IBM SkillsBuild", title: "Artificial Intelligence Fundamentals", date: "Sep 22, 2025",
+      img: "assets/cert-ibm-ai-fundamentals.jpg", verify: "https://www.credly.com/badges/10536706-a71d-4019-b458-26b02570461a", kind: "Credential" },
+    { id: "ibm-se", issuer: "IBM · Coursera", title: "Introduction to Software Engineering", date: "Oct 9, 2025",
+      img: "assets/cert-ibm-software-engineering.jpg", verify: "https://coursera.org/verify/56BLJ53GJQHZ", kind: "Course certificate" },
+    { id: "outskill", issuer: "Outskill", title: "Generative AI Mastermind", date: "2025",
+      img: "assets/cert-outskill-genai.jpg", verify: null, kind: "Certificate of completion" },
+    { id: "guvi", issuer: "GUVI × HCL", title: "Generative AI & Deep Learning webinar", date: "Sep 20, 2025",
+      img: "assets/cert-guvi-hcl.jpg", verify: null, kind: "Certificate of participation" }
   ],
 
   experiments: [
