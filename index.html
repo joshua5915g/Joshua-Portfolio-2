@@ -22,6 +22,11 @@
   <div class="progress" aria-hidden="true"></div>
   <div class="cursor-ring" aria-hidden="true"></div>
 
+  <!-- Project Mouse-Follow Hover Preview Container -->
+  <div class="project-hover-preview" id="hoverPreview" hidden aria-hidden="true">
+    <img src="" alt="Project Preview">
+  </div>
+
   <!-- Scroll-Spy Vertical Dot Navigation -->
   <nav class="scroll-spy-dots" aria-label="Section shortcuts">
     <a href="#top" data-spy="top" aria-label="Home"><span class="spy-tooltip">Home</span></a>
@@ -63,7 +68,12 @@
       <a href="#notes" data-nav="notes">Notes</a>
       <a href="#contact" data-nav="contact">Contact</a>
     </nav>
-    <a class="pill magnetic" href="#contact">Let’s talk <span aria-hidden="true">↗</span></a>
+    <div class="header-actions">
+      <button class="calm-btn" id="calmToggle" type="button" aria-pressed="false" title="Toggle Calm Mode (Disable animations)">
+        <span>☕ Calm Mode</span>
+      </button>
+      <a class="pill magnetic" href="#contact">Let’s talk <span aria-hidden="true">↗</span></a>
+    </div>
   </header>
 
   <main id="main">
@@ -72,7 +82,10 @@
       <div class="glow" aria-hidden="true"></div>
       <div class="grain" aria-hidden="true"></div>
 
-      <p class="eyebrow hero-in"><span class="live"></span> Open to university, internships &amp; freelance</p>
+      <p class="eyebrow hero-in">
+        <span class="live"></span>
+        <span id="timeGreeting">Good day from Kerala</span> · Open to university, internships &amp; freelance
+      </p>
 
       <h1 class="hero-title" aria-label="Joshua Jose">
         <span class="mask"><span class="line">Joshua</span></span>
@@ -319,7 +332,10 @@
         <div data-fade>
           <p class="lede">Open to university opportunities, internships, freelance work and interesting problems. The quickest way to reach me is email.</p>
           <a class="mail magnetic" id="mail" href="mailto:joshua5915g@gmail.com"><span>joshua5915g@gmail.com</span><i aria-hidden="true">↗</i></a>
-          <button class="copy" id="copy" type="button">Copy address</button>
+          <div class="contact-btn-row">
+            <button class="copy" id="copy" type="button">Copy address</button>
+            <button class="copy" id="saveContact" type="button">📇 Save my contact (.vcf)</button>
+          </div>
           <ul class="socials">
             <li><a href="https://www.linkedin.com/in/joshua-jose-466975371/" target="_blank" rel="noopener noreferrer">LinkedIn <i aria-hidden="true">↗</i></a></li>
             <li><a href="https://github.com/joshua5915g" target="_blank" rel="noopener noreferrer">GitHub <i aria-hidden="true">↗</i></a></li>
@@ -341,7 +357,15 @@
   <footer class="footer">
     <span>© 2026 Joshua Jose</span>
     <span class="muted">Last updated: October 2026</span>
-    <a href="#top" id="toTop">Back to top ↑</a>
+    
+    <!-- Back to top button with SVG progress ring -->
+    <a href="#top" id="toTop" class="to-top-wrap" aria-label="Back to top">
+      <svg class="progress-ring" width="40" height="40" viewBox="0 0 40 40">
+        <circle class="progress-ring-bg" cx="20" cy="20" r="18" fill="none" stroke="var(--line)" stroke-width="2"/>
+        <circle class="progress-ring-circle" id="topProgressCircle" cx="20" cy="20" r="18" fill="none" stroke="var(--ember)" stroke-width="2"/>
+      </svg>
+      <span class="to-top-arrow">↑</span>
+    </a>
   </footer>
 
   <!-- Mobile Bottom Nav -->
