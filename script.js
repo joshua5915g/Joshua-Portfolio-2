@@ -1,11 +1,10 @@
 /* ============================================================
    Joshua Jose — portfolio behaviour
-   Includes Command Palette, Scroll-Spy, Audio Atmosphere,
-   Interactive Mini-Demos, Keyboard Shortcuts & Piano Easter Egg.
    ============================================================ */
 (() => {
   const S = window.SITE;
-  const $ = (s, c = document) => c.querySelector(s); const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
+  const $ = (s, c = document) => c.querySelector(s);
+  const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
   const esc = (t) => String(t).replace(/[&<>"']/g, (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m]));
 
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -14,7 +13,78 @@
   const animated = hasGsap && !reduce;
   let lenis = null;
 
-  /* ---------- 1. Render Dynamic Sections ---------- */
+  /* ---------- 1. Tab-Title Personality ---------- */
+  const origTitle = document.title;
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      document.title = "Come back 👋 · Joshua";
+    } else {
+      document.title = origTitle;
+    }
+  });
+
+  /* ---------- 2. Time-Aware Greeting ---------- */
+  function updateTimeGreeting() {
+    const el = $("#timeGreeting");
+    if (!el) return;
+    const hour = new Date().getHours();
+    let greeting = "Good evening";
+    if (hour >= 5 && hour < 12) greeting = "Good morning";
+    else if (hour >= 12 && hour < 17) greeting = "Good afternoon";
+    el.textContent = `${greeting} from Kerala`;
+  }
+  updateTimeGreeting();
+
+  /* ---------- 3. Calm Mode Toggle ---------- */
+  const calmBtn = $("#calmToggle");
+  if (calmBtn) {
+    calmBtn.addEventListener("click", () => {
+      document.documentElement.classList.toggle("calm-mode");
+      const isActive = document.documentElement.classList.contains("calm-mode");
+      calmBtn.classList.toggle("active", isActive);
+      calmBtn.setAttribute("aria-pressed", isActive ? "true" : "false");
+    });
+  }
+
+  /* ---------- 4. Save My Contact (vCard) ---------- */
+  const vcardBtn = $("#saveContact");
+  if (vcardBtn) {
+    vcardBtn.addEventListener("click", () => {
+      const vcardData = [
+        "BEGIN:VCARD",
+        "VERSION:3.0",
+        "N:Jose;Joshua;;;",
+        "FN:Joshua Jose",
+        "TITLE:Developer & Designer",
+        "EMAIL;TYPE=INTERNET,HOME:joshua5915g@gmail.com",
+        "URL:https://wattwise-energy.vercel.app/",
+        "NOTE:Developer & Computer Science Student from Kerala, India",
+        "END:VCARD"
+      ].join("\n");
+
+      const blob = new Blob([vcardData], { type: "text/vcard;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "Joshua_Jose.vcf";
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+  }
+
+  /* ---------- 5. Blur-up Image Smooth Loading ---------- */
+  function setupBlurUpImages() {
+    $$("img").forEach((img) => {
+      img.classList.add("blur-up");
+      if (img.complete) {
+        img.classList.add("loaded");
+      } else {
+        img.addEventListener("load", () => img.classList.add("loaded"));
+      }
+    });
+  }
+
+  /* ---------- 6. Render Dynamic Sections ---------- */
   function previewHTML(p) {
     const inner = p.img
       ? `<img src="${esc(p.img)}" alt="Screenshot of ${esc(p.name)}" loading="lazy" decoding="async">`
@@ -68,7 +138,44 @@
       <span class="arrow" aria-hidden="true">↗</span>
     </button>`).join("");
 
-  /* ---------- 2. Overlay & Mini-Demos ---------- */
+  setupBlurUpImages();
+
+  /* ---------- 7. Mouse Hover Project Preview ---------- */
+  const hoverPreview = $("#hoverPreview");
+  const hoverImg = hoverPreview ? $("img", hoverPreview) : null;    if (hoverPreview && hoverImg && fine) { document.addEventListener("mousemove", (e) => { if (!hoverPreview.hidden) { hoverPreview.style.left = e.clientX + "px"; hoverPreview.style.top = (e.clientY - 15) + "px"; } });      $$("[data-card]").forEach((card) => {
+      const projId = $("[data-project]", card)?.dataset.project;
+      const proj = S.projects.find((p) => p.id === projId);
+      card.addEventListener("mouseenter", () => {
+        if (proj && proj.img) {
+          hoverImg.src = proj.img;
+          hoverPreview.hidden = false;
+          hoverPreview.style.opacity = "1";
+        }
+      });
+      card.addEventListener("mouseleave", () => {
+        hoverPreview.style.opacity = "0";
+        setTimeout(() => { hoverPreview.hidden = true; }, 200);
+      });
+    });
+  }
+
+  /* ---------- 8. Back-To-Top SVG Progress Ring ---------- */
+  const progressCircle = $("#topProgressCircle");
+  if (progressCircle) {
+    const circumference = 2 * Math.PI * 18;
+    progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
+    progressCircle.style.strokeDashoffset = circumference;
+
+    window.addEventListener("scroll", () => {
+      const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollCurrent = window.scrollY;
+      const scrollFraction = Math.max(0, Math.min(1, scrollCurrent / Math.max(1, scrollTotal)));
+      const offset = circumference - scrollFraction * circumference;
+      progressCircle.style.strokeDashoffset = offset;
+    }, { passive: true });
+  }
+
+  /* ---------- 9. Overlay & Mini-Demos ---------- */
   const overlay = $("#overlay"), ovBody = $("#ovBody"), ovClose = $("#ovClose");
   let lastFocus = null, ovOrigin = { x: innerWidth / 2, y: innerHeight / 2 }, ovBusy = false;
 
@@ -198,7 +305,7 @@
   });
   ovClose.addEventListener("click", closeOverlay);
 
-  /* ---------- 3. Tech Stack Filter ---------- */
+  /* ---------- 10. Tech Stack Filter ---------- */
   document.addEventListener("click", (e) => {
     const tagEl = e.target.closest(".tags li");
     if (!tagEl || overlay.getAttribute("aria-hidden") === "false") return;
@@ -224,7 +331,7 @@
     }
   });
 
-  /* ---------- 4. Live GitHub API Activity ---------- */
+  /* ---------- 11. Live GitHub API Activity ---------- */
   async function fetchGitHubActivity() {
     const feed = $("#githubContent");
     if (!feed) return;
@@ -255,7 +362,7 @@
   }
   fetchGitHubActivity();
 
-  /* ---------- 5. Audio-Reactive Atmosphere ---------- */
+  /* ---------- 12. Audio-Reactive Atmosphere ---------- */
   let audioCtx = null, analyser = null, isAudioPlaying = false;
   const audioBtn = $("#audioToggle");
 
@@ -306,7 +413,7 @@
     requestAnimationFrame(animateGlowPulse);
   }
 
-  /* ---------- 6. Mini Demo Handlers ---------- */
+  /* ---------- 13. Mini Demo Handlers ---------- */
   document.addEventListener("change", (e) => {
     if (e.target.id === "pdfInput") {
       const file = e.target.files[0];
@@ -340,7 +447,7 @@
     }
   };
 
-  /* ---------- 7. Command Palette (Ctrl+K) ---------- */
+  /* ---------- 14. Command Palette (Ctrl+K) ---------- */
   const cmdPalette = $("#cmdPalette");
   const cmdInput = $("#cmdInput");
   const cmdList = $("#cmdList");
@@ -411,7 +518,7 @@
     });
 
     cmdInput.addEventListener("keydown", (e) => {
-      const items = $$(".cmd-item", cmdList); if (!items.length) return;        if (e.key === "ArrowDown") { e.preventDefault(); selectedCmdIdx = (selectedCmdIdx + 1) \% items.length; renderCmdList(cmdInput.value); } else if (e.key === "ArrowUp") { e.preventDefault(); selectedCmdIdx = (selectedCmdIdx - 1 + items.length) \% items.length; renderCmdList(cmdInput.value); } else if (e.key === "Enter") { e.preventDefault(); const query = cmdInput.value.toLowerCase().trim(); const filtered = cmdActions.filter((item) => item.title.toLowerCase().includes(query) \vert{}\vert{} item.category.toLowerCase().includes(query)); if (filtered[selectedCmdIdx]) { filtered[selectedCmdIdx].action(); closeCommandPalette(); } } }); }    if (cmdList) { cmdList.addEventListener("click", (e) => { const itemEl = e.target.closest(".cmd-item"); if (!itemEl) return; const idx = +itemEl.dataset.cmdIdx; const query = cmdInput.value.toLowerCase().trim(); const filtered = cmdActions.filter((item) => item.title.toLowerCase().includes(query) \vert{}\vert{} item.category.toLowerCase().includes(query)); if (filtered[idx]) { filtered[idx].action(); closeCommandPalette(); } }); }    document.addEventListener("keydown", (e) => { if ((e.metaKey \vert{}\vert{} e.ctrlKey) && e.key.toLowerCase() === "k") { e.preventDefault(); if (cmdPalette.hidden) openCommandPalette(); else closeCommandPalette(); } if (e.key === "Escape" && !cmdPalette.hidden) closeCommandPalette(); });    if (cmdPalette) { cmdPalette.addEventListener("click", (e) => { if (e.target === cmdPalette) closeCommandPalette(); }); }    /* ---------- 8. Scroll-Spy Sync ---------- */ const spyDots = $$(".scroll-spy-dots a");
+      const items = $$(".cmd-item", cmdList); if (!items.length) return;        if (e.key === "ArrowDown") { e.preventDefault(); selectedCmdIdx = (selectedCmdIdx + 1) \% items.length; renderCmdList(cmdInput.value); } else if (e.key === "ArrowUp") { e.preventDefault(); selectedCmdIdx = (selectedCmdIdx - 1 + items.length) \% items.length; renderCmdList(cmdInput.value); } else if (e.key === "Enter") { e.preventDefault(); const query = cmdInput.value.toLowerCase().trim(); const filtered = cmdActions.filter((item) => item.title.toLowerCase().includes(query) \vert{}\vert{} item.category.toLowerCase().includes(query)); if (filtered[selectedCmdIdx]) { filtered[selectedCmdIdx].action(); closeCommandPalette(); } } }); }    if (cmdList) { cmdList.addEventListener("click", (e) => { const itemEl = e.target.closest(".cmd-item"); if (!itemEl) return; const idx = +itemEl.dataset.cmdIdx; const query = cmdInput.value.toLowerCase().trim(); const filtered = cmdActions.filter((item) => item.title.toLowerCase().includes(query) \vert{}\vert{} item.category.toLowerCase().includes(query)); if (filtered[idx]) { filtered[idx].action(); closeCommandPalette(); } }); }    document.addEventListener("keydown", (e) => { if ((e.metaKey \vert{}\vert{} e.ctrlKey) && e.key.toLowerCase() === "k") { e.preventDefault(); if (cmdPalette.hidden) openCommandPalette(); else closeCommandPalette(); } if (e.key === "Escape" && !cmdPalette.hidden) closeCommandPalette(); });    if (cmdPalette) { cmdPalette.addEventListener("click", (e) => { if (e.target === cmdPalette) closeCommandPalette(); }); }    /* ---------- 15. Scroll-Spy Sync ---------- */ const spyDots = $$(".scroll-spy-dots a");
 
   ["top", "about", "journey", "work", "skills", "resume", "notes", "contact"].forEach((id) => {
     ScrollTrigger.create({
@@ -430,7 +537,7 @@
     });
   });
 
-  /* ---------- 9. Deep Linking & Share ---------- */
+  /* ---------- 16. Deep Linking & Note Share ---------- */
   window.copyNoteLink = function(noteId, evt) {
     evt.stopPropagation();
     const link = `${location.origin}${location.pathname}?note=${noteId}`;
@@ -456,7 +563,7 @@
   }
   checkDeepLink();
 
-  /* ---------- 10. Keyboard Shortcuts & Easter Egg ---------- */
+  /* ---------- 17. Keyboard Shortcuts & Easter Egg ---------- */
   let gKeyPressed = false, gTimeout = null, pianoBuffer = "";
 
   document.addEventListener("keydown", (e) => {
@@ -464,7 +571,6 @@
 
     const key = e.key.toLowerCase();
 
-    // Church Piano Easter Egg Detection
     pianoBuffer += key;
     if (pianoBuffer.length > 10) pianoBuffer = pianoBuffer.slice(-10);
     if (pianoBuffer.endsWith("piano")) {
@@ -472,7 +578,6 @@
       triggerChurchPianoHarmonic();
     }
 
-    // Navigation Shortcuts (G then W/A/R/N/C)
     if (key === "g" && !gKeyPressed) {
       gKeyPressed = true;
       clearTimeout(gTimeout);
@@ -492,7 +597,6 @@
       return;
     }
 
-    // Overlay Arrow Navigation
     const isOverlayOpen = overlay.getAttribute("aria-hidden") === "false";
     if (isOverlayOpen) {
       const currentProjId = ovBody.querySelector("[data-project-id]")?.dataset.projectId;
@@ -542,7 +646,7 @@
     setTimeout(() => toast.remove(), 4000);
   }
 
-  /* ---------- 11. UI Clock, Form & Motion Engine ---------- */
+  /* ---------- 18. UI Clock, Form & Motion Engine ---------- */
   const clock = $("#clock");
   const tick = () => { clock.textContent = new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Kolkata" }) + " IST"; };
   tick(); setInterval(tick, 20000);
