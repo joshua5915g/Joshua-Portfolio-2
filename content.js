@@ -1,13 +1,10 @@
 /* ============================================================
    ALL copy that changes lives here. Edit text freely; the
    animation code in script.js never needs to be touched.
-   Static sections (hero, about, resume, contact) are in index.html.
    ============================================================ */
 window.SITE = {
   email: "joshua5915g@gmail.com",
 
-  /* Add a screenshot per project: put it in assets/ and set img: "assets/name.jpg".
-     Without img, a designed placeholder panel is shown. */
   projects: [
     {
       id: "wattwise", no: "01", name: "WattWise", sub: "Solar Intelligence", year: "2026",
@@ -100,7 +97,6 @@ window.SITE = {
     }
   ],
 
-  /* Certificates shown as a gallery in the Resume section. Images live in assets/. */
   certificates: [
     { id: "ibm-ai", issuer: "IBM SkillsBuild", title: "Artificial Intelligence Fundamentals", date: "Sep 22, 2025",
       img: "assets/cert-ibm-ai-fundamentals.jpg", verify: "https://www.credly.com/badges/10536706-a71d-4019-b458-26b02570461a", kind: "Credential" },
@@ -123,7 +119,6 @@ window.SITE = {
     }
   ],
 
-  /* Drafts based on your projects. Edit the wording so it matches your own experience. */
   posts: [
     {
       id: "wattwise-973mb", tag: "Engineering", date: "Oct 2026", read: "3 min",
