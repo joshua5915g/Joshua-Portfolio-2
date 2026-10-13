@@ -42,6 +42,89 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .skip { position: fixed; left: 12px; top: -60px; z-index: 200; background: var(--ember); color: #fff; padding: 8px 14px; border-radius: 8px; }
 .skip:focus { top: 12px; }
 
+/* ---------- Calm Mode Toggle ---------- */
+html.calm-mode *, html.calm-mode *::before, html.calm-mode *::after {
+  animation: none !important;
+  transition: none !important;
+}
+html.calm-mode {
+  font-size: 1.125rem;
+}
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.calm-btn {
+  font: 500 0.78rem var(--mono);
+  color: var(--muted);
+  border: 1px solid var(--line);
+  padding: 8px 14px;
+  border-radius: 999px;
+  transition: all 0.2s;
+}
+.calm-btn:hover, .calm-btn.active {
+  border-color: var(--amethyst);
+  color: var(--text);
+  background: rgba(167, 139, 250, 0.12);
+}
+
+/* ---------- Blur-up Image Loading ---------- */
+img.blur-up {
+  filter: blur(12px);
+  opacity: 0.4;
+  transition: filter 0.6s var(--ease), opacity 0.6s var(--ease);
+}
+img.blur-up.loaded {
+  filter: blur(0);
+  opacity: 1;
+}
+
+/* ---------- Mouse Hover Project Preview ---------- */
+.project-hover-preview {
+  position: fixed;
+  pointer-events: none;
+  z-index: 160;
+  width: 240px;
+  height: 150px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--bg-2);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+  transform: translate(-50%, -100%);
+  transition: opacity 0.25s var(--ease);
+  opacity: 0;
+}
+.project-hover-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- Back to Top SVG Progress Ring ---------- */
+.to-top-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+.progress-ring {
+  position: absolute;
+  inset: 0;
+  transform: rotate(-90deg);
+}
+.progress-ring-circle {
+  transition: stroke-dashoffset 0.1s linear;
+}
+.to-top-arrow {
+  font-weight: bold;
+  color: var(--text);
+  z-index: 1;
+}
+
 /* ---------- type ---------- */
 .label { font: 500 .78rem/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.6rem; }
 .h1 { font: 700 clamp(2.4rem, 6.4vw, 6rem)/.98 var(--display); letter-spacing: -.035em; }
@@ -372,7 +455,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .pv-ui i:nth-child(4) { width: 90%; height: 70px; border-radius: 10px; }
 .pv-host { position: absolute; left: 14px; top: 14px; z-index: 2; font: 500 .72rem var(--mono); padding: 6px 12px; border-radius: 999px; background: rgba(11, 10, 12, .6); color: var(--text); letter-spacing: .02em; }
 .card-info { display: flex; flex-direction: column; justify-content: center; padding: clamp(4px, 1vw, 14px) clamp(4px, 1vw, 12px); }
-.card-top { display: flex; justify-between; font: 500 .75rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; }
+.card-top { display: flex; justify-content: space-between; font: 500 .75rem var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; }
 .card-info h3 { font: 700 clamp(2rem, 3.8vw, 3.4rem)/1 var(--display); letter-spacing: -.035em; }
 .card-info h3 small { display: block; margin-top: 8px; font: 500 1rem var(--body); letter-spacing: 0; color: var(--muted); }
 .card-info p { margin: 18px 0 20px; color: #cfc8c2; max-width: 46ch; }
@@ -415,7 +498,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .tl-item::after { content: ""; position: absolute; left: 4px; top: 1.6em; bottom: -30px; width: 1px; background: var(--line); }
 .tl-item:last-child::after { display: none; }
 .tl-item time { font: 500 .8rem var(--mono); color: var(--amethyst); }
-.tl-item h4 { font: 700 1.25rem/1.25 var(--display); letter-spacing: -.015em; margin: 6px 0 2px; }
+.tl-item h4 { font: 700 1.25rem/1.25 var(--display); letter-spacing: -.01em; margin: 6px 0 2px; }
 .tl-item p:last-child { margin-top: 8px; color: #cfc8c2; font-size: .98rem; }
 .langs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .langs li { display: flex; justify-content: space-between; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; }
@@ -458,7 +541,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .post .arrow { font: 400 1.8rem var(--display); color: var(--ember); transition: transform .5s var(--ease); }
 .post:hover .arrow { transform: translate(6px, -6px); }
 
-/* ---------- Share Button in Notes & Modals ---------- */
+/* ---------- Share Button in Notes ---------- */
 .share-btn {
   display: inline-flex;
   align-items: center;
@@ -477,7 +560,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   background: rgba(167, 139, 250, 0.1);
 }
 
-/* ---------- Piano Easter Egg Toast Notification ---------- */
+/* ---------- Piano Easter Egg Toast ---------- */
 .piano-toast {
   position: fixed;
   bottom: 24px;
@@ -496,11 +579,12 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 
 /* ---------- contact ---------- */
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 7vw, 110px); margin-top: clamp(40px, 7vw, 90px); align-items: start; }
+.contact-btn-row { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 14px; }
 .mail { display: inline-flex; align-items: center; gap: 14px; font: 700 clamp(1.3rem, 2.6vw, 2.1rem) var(--display); letter-spacing: -.02em; border-bottom: 2px solid var(--ember); padding-bottom: 6px; word-break: break-all; }
 .mail i { font-style: normal; color: var(--ember); transition: transform .4s var(--ease); }
 .mail:hover i { transform: translate(4px, -4px); }
-.copy { display: block; margin-top: 14px; font: 500 .78rem var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); transition: color .25s; }
-.copy:hover { color: var(--text); }
+.copy { display: inline-block; font: 500 .78rem var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); transition: color .25s; cursor: pointer; border: 1px solid var(--line); padding: 8px 14px; border-radius: 999px; }
+.copy:hover { color: var(--text); border-color: var(--ember); }
 .socials { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
 .socials a { display: inline-block; padding: 10px 18px; border: 1px solid var(--line); border-radius: 999px; font: 500 .85rem var(--mono); transition: border-color .25s, color .25s; }
 .socials a:hover { border-color: var(--ember); color: var(--ember); }
@@ -513,7 +597,7 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .form-status { min-height: 1.4em; font-size: .9rem; color: var(--muted); }
 .form-status.err { color: #ff8a6b; }
 
-.footer { display: flex; flex-wrap: wrap; gap: 14px 32px; justify-content: space-between; padding: 30px var(--pad); border-top: 1px solid var(--line); font: 500 .8rem var(--mono); }
+.footer { display: flex; flex-wrap: wrap; gap: 14px 32px; justify-content: space-between; align-items: center; padding: 30px var(--pad); border-top: 1px solid var(--line); font: 500 .8rem var(--mono); }
 .footer a:hover { color: var(--ember); }
 
 /* ---------- overlay ---------- */
@@ -606,6 +690,46 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
   background: var(--ember);
   color: #fff;
   border-color: var(--ember);
+}
+
+/* ---------- PRINT STYLESHEET (Clean 1-Page Printable CV) ---------- */
+@media print {
+  body {
+    background: #fff !important;
+    color: #111 !important;
+    font-size: 10pt !important;
+  }
+  .site-header, .hero, .marquee, .about, .journey, .work, .skills, .notes, .contact, .footer,
+  .scroll-spy-dots, .cmd-overlay, .mobile-nav, .cursor-ring, .progress, .cert-gallery, .resume-actions {
+    display: none !important;
+  }
+  .section.resume {
+    padding: 0 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+  .resume-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 20px !important;
+  }
+  .col-title {
+    color: #111 !important;
+    border-bottom: 1px solid #ccc !important;
+  }
+  .tl-item::before {
+    background: #111 !important;
+  }
+  .tl-item::after {
+    background: #ccc !important;
+  }
+  .muted, .tl-item time, .langs span {
+    color: #444 !important;
+  }
+  .cert, .langs li {
+    border: 1px solid #ccc !important;
+    background: #fff !important;
+  }
 }
 
 /* ---------- responsive ---------- */
