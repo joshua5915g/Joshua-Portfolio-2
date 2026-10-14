@@ -139,6 +139,31 @@ img.blur-up.loaded {
 .section-head { margin-bottom: clamp(36px, 6vw, 80px); }
 .section-head.row { display: flex; flex-wrap: wrap; gap: 28px; align-items: flex-end; justify-content: space-between; }
 
+/* ---------- Option 2: Domain Filter Bar Styles ---------- */
+.domain-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 36px;
+}
+.filter-tab {
+  font: 500 0.8rem var(--mono);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--bg-2);
+  color: var(--muted);
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+}
+.filter-tab:hover, .filter-tab.active {
+  color: var(--text);
+  border-color: var(--ember);
+  background: rgba(255, 90, 31, 0.12);
+}
+
 /* ---------- progress / cursor ---------- */
 .progress { position: fixed; inset: 0 0 auto 0; height: 2px; z-index: 120; background: linear-gradient(90deg, var(--ember), var(--amethyst)); transform: scaleX(0); transform-origin: 0 50%; }
 .cursor-ring { position: fixed; left: 0; top: 0; width: 34px; height: 34px; margin: -17px 0 0 -17px; border: 1px solid var(--ember); border-radius: 50%; pointer-events: none; z-index: 150; opacity: 0; transition: width .3s var(--ease), height .3s var(--ease), margin .3s var(--ease), background .3s, opacity .3s; }
@@ -624,6 +649,41 @@ img.blur-up.loaded {
 .ov-article p { font-size: clamp(1.05rem, 1.5vw, 1.2rem); line-height: 1.75; color: #d9d2cc; margin-bottom: 1.4rem; max-width: 62ch; }
 .ov-article { margin-top: clamp(28px, 5vw, 56px); padding-top: 32px; border-top: 1px solid var(--line); }
 
+/* ---------- Option 3: Architecture Flow Diagram Styles ---------- */
+.ov-arch {
+  margin: 32px 0;
+  padding: 24px;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+}
+.arch-title {
+  font: 500 0.78rem var(--mono);
+  color: var(--amethyst);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-bottom: 16px;
+}
+.arch-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.arch-step {
+  font: 500 0.85rem var(--mono);
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  padding: 10px 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+.arch-arrow {
+  font: 700 1.2rem var(--display);
+  color: var(--ember);
+}
+
 /* ---------- Case Study Metrics Stat Grid ---------- */
 .ov-metrics {
   display: grid;
@@ -700,7 +760,7 @@ img.blur-up.loaded {
     font-size: 10pt !important;
   }
   .site-header, .hero, .marquee, .about, .journey, .work, .skills, .notes, .contact, .footer,
-  .scroll-spy-dots, .cmd-overlay, .mobile-nav, .cursor-ring, .progress, .cert-gallery, .resume-actions {
+  .scroll-spy-dots, .cmd-overlay, .mobile-nav, .cursor-ring, .progress, .cert-gallery, .resume-actions, .domain-filter-bar {
     display: none !important;
   }
   .section.resume {
@@ -743,6 +803,8 @@ img.blur-up.loaded {
   .preview { min-height: 220px; }
   .post { grid-template-columns: 1fr auto; }
   .post .meta { grid-column: 1 / -1; }
+  .arch-flow { flex-direction: column; align-items: flex-start; }
+  .arch-arrow { transform: rotate(90deg); margin: 2px 0 2px 16px; }
 }
 @media (max-width: 520px) {
   .pill { display: none; }
