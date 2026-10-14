@@ -142,12 +142,18 @@
 
   /* ---------- 7. Mouse Hover Project Preview ---------- */
   const hoverPreview = $("#hoverPreview");
-  const hoverImg = hoverPreview ? $("img", hoverPreview) : null;    if (hoverPreview && hoverImg && fine) { document.addEventListener("mousemove", (e) => { if (!hoverPreview.hidden) { hoverPreview.style.left = e.clientX + "px"; hoverPreview.style.top = (e.clientY - 15) + "px"; } });      $$("[data-card]").forEach((card) => {
+  const hoverImg = hoverPreview ? $("img", hoverPreview) : null;    if (hoverPreview && hoverImg && fine) { document.addEventListener("mousemove", (e) => { if (!hoverPreview.hidden) { hoverPreview.style.left = (e.clientX + 15) + "px"; hoverPreview.style.top = (e.clientY + 15) + "px"; } });      $$("[data-card]").forEach((card) => {
       const projId = $("[data-project]", card)?.dataset.project;
       const proj = S.projects.find((p) => p.id === projId);
       card.addEventListener("mouseenter", () => {
-        if (proj && proj.img) {
-          hoverImg.src = proj.img;
+        if (proj) {
+          if (proj.img) {
+            hoverImg.src = proj.img;
+            hoverImg.style.display = "block";
+          } else {
+            hoverImg.style.display = "none";
+            hoverPreview.style.background = `linear-gradient(${proj.angle || 135}deg, ${proj.a || '#ff5a1f'}, ${proj.b || '#a78bfa'})`;
+          }
           hoverPreview.hidden = false;
           hoverPreview.style.opacity = "1";
         }
