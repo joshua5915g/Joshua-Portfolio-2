@@ -93,7 +93,7 @@
   }
 
   $("#stack").innerHTML = S.projects.map((p, i) => `
-    <article class="card" style="--i:${i}" data-card>
+    <article class="card" style="--i:${i}" data-card data-category="${esc(p.category)}">
       <div class="card-in">
         <div class="preview" style="--a:${p.a};--b:${p.b};--angle:${p.angle}deg" data-tilt>${previewHTML(p)}</div>
         <div class="card-info">
@@ -139,6 +139,18 @@
     </button>`).join("");
 
   setupBlurUpImages();
+
+  /* ---------- Option 2: Domain Filter Bar Functionality ---------- */
+  const filterTabs = $$(".filter-tab"); filterTabs.forEach((tab) => { tab.addEventListener("click", () => { const selectedCategory = tab.dataset.category; filterTabs.forEach((t) => t.classList.remove("active")); tab.classList.add("active");        $$("[data-card]").forEach((card) => {
+        const cardCategory = card.dataset.category;
+        if (selectedCategory === "all" || cardCategory === selectedCategory) {
+          card.classList.remove("dimmed");
+        } else {
+          card.classList.add("dimmed");
+        }
+      });
+    });
+  });
 
   /* ---------- 7. Mouse Hover Project Preview ---------- */
   const hoverPreview = $("#hoverPreview");
@@ -215,6 +227,18 @@
       ? `<div class="ov-metrics">${p.metrics.map((m) => `<div class="metric-box"><label>${esc(m.label)}</label><span>${esc(m.val)}</span></div>`).join("")}</div>`
       : "";
 
+    /* Option 3: Render Architecture Flow Diagram */
+    const archHTML = p.architecture
+      ? `<div class="ov-arch">
+           <p class="arch-title">⚡ Architecture & Data Flow</p>
+           <div class="arch-flow">
+             ${p.architecture.map((step, idx) => `
+               <div class="arch-step">${esc(step)}</div>${idx < p.architecture.length - 1 ? `<span class="arch-arrow">→</span>` : ''}
+             `).join('')}
+           </div>
+         </div>`
+      : "";
+
     return `
       <div data-project-id="${esc(p.id)}">
         <p class="ov-kicker ov-r">Case study · ${esc(p.no)}</p>
@@ -222,6 +246,7 @@
         <div class="preview ov-preview ov-r" style="--a:${p.a};--b:${p.b};--angle:${p.angle}deg">${previewHTML(p)}</div>
         
         ${metricsHTML}
+        ${archHTML}
         
         <dl class="ov-facts ov-r">
           <div><dt>Year</dt><dd>${esc(p.year)}</dd></div>
@@ -311,7 +336,7 @@
   });
   ovClose.addEventListener("click", closeOverlay);
 
-  /* ---------- 10. Tech Stack Filter ---------- */
+  /* ---------- 10. Tech Tag Filter ---------- */
   document.addEventListener("click", (e) => {
     const tagEl = e.target.closest(".tags li");
     if (!tagEl || overlay.getAttribute("aria-hidden") === "false") return;
