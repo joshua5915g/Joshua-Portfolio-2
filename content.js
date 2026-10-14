@@ -7,10 +7,11 @@ window.SITE = {
 
   projects: [
     {
-      id: "wattwise", no: "01", name: "WattWise", sub: "Solar Intelligence", year: "2026",
+      id: "wattwise", no: "01", name: "WattWise", sub: "Solar Intelligence", year: "2026", category: "iot",
       kind: "Web app · Energy analytics", url: "https://wattwise-energy.vercel.app/", host: "wattwise-energy.vercel.app",
       tagline: "Solar analytics dashboard built for Indian installations, to optimise consumption, battery storage and bills.",
       summary: "A production-ready dashboard that helps households and installers understand how much solar energy they generate and use, and when to store or draw from a battery.",
+      architecture: ["User Request", "TypeScript Next.js API Route", "Live Weather Fetch", "AI Battery Schedule"],
       metrics: [
         { label: "Backend size reduction", val: "973 MB → <10 KB" },
         { label: "Monitored cities", val: "70+" },
@@ -25,10 +26,11 @@ window.SITE = {
       img: null, a: "#ff5a1f", b: "#a78bfa", angle: 135
     },
     {
-      id: "nutrigrade", no: "02", name: "NutriGrade AI", sub: "Food label analysis", year: "2026",
+      id: "nutrigrade", no: "02", name: "NutriGrade AI", sub: "Food label analysis", year: "2026", category: "ai",
       kind: "Web app · AI", url: "https://nutrition-food-grader.vercel.app/", host: "nutrition-food-grader.vercel.app",
       tagline: "A nutritional truth engine that cuts through marketing labels using deterministic food science and Gemini Vision.",
       summary: "Point it at a food package and it reads the ingredients, grades the product and flags what the front of the box does not tell you.",
+      architecture: ["Label Photo", "Gemini Vision OCR", "NOVA Science Rules", "Client Health Overlay"],
       metrics: [
         { label: "Hidden additives flagged", val: "60+" },
         { label: "Privacy standard", val: "100% Client-Side" },
@@ -43,10 +45,11 @@ window.SITE = {
       img: null, a: "#ff8a3d", b: "#6d5bd0", angle: 200
     },
     {
-      id: "neurospec", no: "03", name: "NeuroSpec IIoT", sub: "Telemetry & digital twin", year: "2026",
+      id: "neurospec", no: "03", name: "NeuroSpec IIoT", sub: "Telemetry & digital twin", year: "2026", category: "iot",
       kind: "Platform · Industrial IoT", url: "https://neurospeciiot.vercel.app/", host: "neurospeciiot.vercel.app",
       tagline: "An industrial telemetry and digital-twin platform that watches vibration and acoustic data to predict machine faults.",
       summary: "Monitors high-frequency acoustic emissions and kinematic spectrum harmonics, and uses real-time AI prognostics to catch bearing faults before they become failures.",
+      architecture: ["10 kHz Acoustic Stream", "Client FFT DSP Engine", "Harmonic Peak Isolator", "3D WebGL Digital Twin"],
       metrics: [
         { label: "Acoustic sampling rate", val: "10 kHz" },
         { label: "Simulated edge nodes", val: "455+" },
@@ -61,10 +64,11 @@ window.SITE = {
       img: null, a: "#ff5a1f", b: "#7c5cff", angle: 160
     },
     {
-      id: "pdfzero", no: "04", name: "PDFZero", sub: "Serverless PDF suite", year: "2026",
+      id: "pdfzero", no: "04", name: "PDFZero", sub: "Serverless PDF suite", year: "2026", category: "wasm",
       kind: "Web app · Privacy-first tools", url: "https://pdfzero-eight.vercel.app/", host: "pdfzero-eight.vercel.app",
       tagline: "A 100% client-side PDF toolkit with 160+ utilities and zero data leaving the browser.",
       summary: "Document processing that runs entirely in memory through WebAssembly, so files are never uploaded anywhere.",
+      architecture: ["Local PDF File", "In-Memory WebAssembly", "Local Processing Engine", "Zero-Server Download"],
       metrics: [
         { label: "Built-in utilities", val: "160+" },
         { label: "Data sent to server", val: "0 Bytes" },
@@ -79,10 +83,11 @@ window.SITE = {
       img: null, a: "#ff7a2f", b: "#a78bfa", angle: 120
     },
     {
-      id: "finance", no: "05", name: "Finance Tracker", sub: "Personal budgeting", year: "2026",
+      id: "finance", no: "05", name: "Finance Tracker", sub: "Personal budgeting", year: "2026", category: "wasm",
       kind: "Full-stack web app", url: "https://finance-monitor.lovable.app/", host: "finance-monitor.lovable.app",
       tagline: "Track income, daily expenses and savings goals with interactive dashboards.",
       summary: "A full-stack budgeting app with a React front end and a Node and Express API for transaction records.",
+      architecture: ["User Input", "React Dashboards", "Express REST API", "Lovable Cloud Storage"],
       metrics: [
         { label: "Architecture", val: "Full-stack REST" },
         { label: "Hosting", val: "Lovable Cloud" }
