@@ -43,6 +43,10 @@
       const isActive = document.documentElement.classList.contains("calm-mode");
       calmBtn.classList.toggle("active", isActive);
       calmBtn.setAttribute("aria-pressed", isActive ? "true" : "false");
+      if (window.gsap) {
+        if (isActive) window.gsap.globalTimeline.pause();
+        else window.gsap.globalTimeline.resume();
+      }
     });
   }
 
@@ -77,9 +81,17 @@
     $$("img").forEach((img) => {
       img.classList.add("blur-up");
       if (img.complete) {
-        img.classList.add("loaded");
+        if (img.naturalWidth) img.classList.add("loaded");
+        else {
+          img.hidden = true;
+          img.parentElement?.classList.add("image-unavailable");
+        }
       } else {
         img.addEventListener("load", () => img.classList.add("loaded"));
+        img.addEventListener("error", () => {
+          img.hidden = true;
+          img.parentElement?.classList.add("image-unavailable");
+        }, { once: true });
       }
     });
   }
@@ -321,6 +333,19 @@
     } else done();
   }
 
+  overlay.addEventListener("keydown", (e) => {
+    if (e.key !== "Tab") return;
+    const focusable = $$('a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])', overlay)
+      .filter((el) => el.getClientRects().length > 0);
+    if (!focusable.length) return;
+    const first = focusable[0], last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault(); last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault(); first.focus();
+    }
+  });
+
   document.addEventListener("click", (e) => {
     const t = e.target.closest("[data-project],[data-post],[data-cert]");
     if (t && !e.target.closest(".share-btn")) {
@@ -388,7 +413,7 @@
           </div>`;
       }).join("");
     } catch (err) {
-      feed.innerHTML = '<span class="muted">Connected via GitHub API (joshua5915g).</span>';
+      feed.innerHTML = '<span class="muted">GitHub activity is temporarily unavailable. Visit <a href="https://github.com/joshua5915g" target="_blank" rel="noopener noreferrer">my profile</a> to see recent work.</span>';
     }
   }
   fetchGitHubActivity();
@@ -453,7 +478,8 @@
       reader.onload = (evt) => {
         const res = evt.target.result;
         const count = (res.match(/\/Type\s*\/Page\b/g) || []).length;
-        $("#pdfResult").innerHTML = `📄 ${esc(file.name)} — <b>${count || 1} page(s) detected</b> (0 KB sent to server)`;
+        const estimate = count ? `about ${count} page(s)` : "page count unavailable";
+        $("#pdfResult").textContent = `📄 ${file.name} — ${estimate}. The file was read locally and not uploaded.`;
       };
       reader.readAsText(file);
     }
@@ -471,10 +497,10 @@
     
     if (type === 'bar') {
       evt.target.classList.add("active");
-      result.innerHTML = "<b>NutriGrade: B+</b> · Flags: High Sucralose, Added Palm Oil.";
+      result.innerHTML = "<b>Sample result: B+</b> · Example flags: High Sucralose, Added Palm Oil. This is illustrative, not a real analysis.";
     } else {
       evt.target.classList.add("active");
-      result.innerHTML = "<b>NutriGrade: D</b> · Flags: Aspartame, Caramel Color IV, Synthetic Phosphoric Acid.";
+      result.innerHTML = "<b>Sample result: D</b> · Example flags: Aspartame, Caramel Color IV, Synthetic Phosphoric Acid. This is illustrative, not a real analysis.";
     }
   };
 
@@ -524,14 +550,17 @@
     }
 
     cmdList.innerHTML = filtered.map((item, i) => `
-      <li class="cmd-item ${i === selectedCmdIdx ? "selected" : ""}" data-cmd-idx="${i}">
+      <li class="cmd-item ${i === selectedCmdIdx ? "selected" : ""}" role="option" aria-selected="${i === selectedCmdIdx}" data-cmd-idx="${i}">
         <span>${esc(item.title)}</span>
         <small>${esc(item.category)}</small>
       </li>`).join("");
   }
 
+  let commandPaletteOrigin = null;
   function openCommandPalette() {
+    commandPaletteOrigin = document.activeElement;
     cmdPalette.hidden = false;
+    cmdPalette.setAttribute("aria-hidden", "false");
     cmdInput.value = "";
     selectedCmdIdx = 0;
     renderCmdList();
@@ -540,6 +569,8 @@
 
   function closeCommandPalette() {
     cmdPalette.hidden = true;
+    cmdPalette.setAttribute("aria-hidden", "true");
+    if (commandPaletteOrigin?.focus) commandPaletteOrigin.focus({ preventScroll: true });
   }
 
   if (cmdInput) {
@@ -549,7 +580,49 @@
     });
 
     cmdInput.addEventListener("keydown", (e) => {
-      const items = $$(".cmd-item", cmdList); if (!items.length) return;        if (e.key === "ArrowDown") { e.preventDefault(); selectedCmdIdx = (selectedCmdIdx + 1) \% items.length; renderCmdList(cmdInput.value); } else if (e.key === "ArrowUp") { e.preventDefault(); selectedCmdIdx = (selectedCmdIdx - 1 + items.length) \% items.length; renderCmdList(cmdInput.value); } else if (e.key === "Enter") { e.preventDefault(); const query = cmdInput.value.toLowerCase().trim(); const filtered = cmdActions.filter((item) => item.title.toLowerCase().includes(query) \vert{}\vert{} item.category.toLowerCase().includes(query)); if (filtered[selectedCmdIdx]) { filtered[selectedCmdIdx].action(); closeCommandPalette(); } } }); }    if (cmdList) { cmdList.addEventListener("click", (e) => { const itemEl = e.target.closest(".cmd-item"); if (!itemEl) return; const idx = +itemEl.dataset.cmdIdx; const query = cmdInput.value.toLowerCase().trim(); const filtered = cmdActions.filter((item) => item.title.toLowerCase().includes(query) \vert{}\vert{} item.category.toLowerCase().includes(query)); if (filtered[idx]) { filtered[idx].action(); closeCommandPalette(); } }); }    document.addEventListener("keydown", (e) => { if ((e.metaKey \vert{}\vert{} e.ctrlKey) && e.key.toLowerCase() === "k") { e.preventDefault(); if (cmdPalette.hidden) openCommandPalette(); else closeCommandPalette(); } if (e.key === "Escape" && !cmdPalette.hidden) closeCommandPalette(); });    if (cmdPalette) { cmdPalette.addEventListener("click", (e) => { if (e.target === cmdPalette) closeCommandPalette(); }); }    /* ---------- 15. Scroll-Spy Sync ---------- */ const spyDots = $$(".scroll-spy-dots a");
+      const items = $$(".cmd-item[data-cmd-idx]", cmdList);
+      if (!items.length) return;
+      if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+        e.preventDefault();
+        const direction = e.key === "ArrowDown" ? 1 : -1;
+        selectedCmdIdx = (selectedCmdIdx + direction + items.length) % items.length;
+        renderCmdList(cmdInput.value);
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        items[selectedCmdIdx]?.click();
+      }
+    });
+  }
+
+  if (cmdList) {
+    cmdList.setAttribute("role", "listbox");
+    cmdList.addEventListener("click", (e) => {
+      const itemEl = e.target.closest(".cmd-item[data-cmd-idx]");
+      if (!itemEl) return;
+      const query = cmdInput.value.toLowerCase().trim();
+      const filtered = cmdActions.filter((item) => item.title.toLowerCase().includes(query) || item.category.toLowerCase().includes(query));
+      filtered[Number(itemEl.dataset.cmdIdx)]?.action();
+      closeCommandPalette();
+    });
+  }
+
+  document.addEventListener("keydown", (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+      e.preventDefault();
+      if (cmdPalette.hidden) openCommandPalette();
+      else closeCommandPalette();
+    }
+    if (e.key === "Escape" && !cmdPalette.hidden) closeCommandPalette();
+  });
+
+  if (cmdPalette) {
+    cmdPalette.addEventListener("click", (e) => {
+      if (e.target === cmdPalette) closeCommandPalette();
+    });
+  }
+
+  /* ---------- 15. Scroll-Spy Sync ---------- */
+  const spyDots = $$(".scroll-spy-dots a");
 
   ["top", "about", "journey", "work", "skills", "resume", "notes", "contact"].forEach((id) => {
     ScrollTrigger.create({
@@ -728,14 +801,14 @@
   if (fine) {
     const gx = gsap.quickTo(".glow", "x", { duration: 1.6, ease: "power3" });
     const gy = gsap.quickTo(".glow", "y", { duration: 1.6, ease: "power3" });
-    $("#top").addEventListener("pointermove", (e) => { const r = $("#top").getBoundingClientRect(); gx(e.clientX - r.left); gy(e.clientY - r.top); }); }    gsap.to(".hero-title", { yPercent: -12, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } }); $$(".split").forEach((el) => gsap.from($$(".line", el), { yPercent: 115, duration: 1.2, ease: "expo.out", stagger: .09, scrollTrigger: { trigger: el, start: "top 88\%" } })); $$("[data-fade]").forEach((el) => gsap.from(el, { y: 36, opacity: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 90%" } }));
+    $("#top").addEventListener("pointermove", (e) => { const r = $("#top").getBoundingClientRect(); gx(e.clientX - r.left); gy(e.clientY - r.top); }); }    gsap.to(".hero-title", { yPercent: -12, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } }); $$(".split").forEach((el) => gsap.from($$(".line", el), { yPercent: 115, duration: 1.2, ease: "expo.out", stagger: .09, scrollTrigger: { trigger: el, start: "top 88%" } })); $$("[data-fade]").forEach((el) => gsap.from(el, { y: 36, opacity: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 90%" } }));
 
   const st = $("#statement");
   const words = st.textContent.trim().split(/\s+/);
   st.innerHTML = words.map((w) => `<span class="w">${esc(w)} </span>`).join("");
   gsap.fromTo($$(".w", st), { opacity: .16 }, { opacity: 1, stagger: .12, ease: "none", scrollTrigger: { trigger: st, start: "top 80%", end: "bottom 45%", scrub: true } });
 
-  $$("[data-count]").forEach((el) => { const end = +el.dataset.count, o = { v: 0 }; gsap.to(o, { v: end, duration: 1.6, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 90\%" }, onUpdate: () => (el.textContent = Math.round(o.v)) }); });    const mm = gsap.matchMedia(); mm.add("(min-width: 901px)", () => { const cards = $$
+  $$("[data-count]").forEach((el) => { const end = +el.dataset.count, o = { v: 0 }; gsap.to(o, { v: end, duration: 1.6, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 90%" }, onUpdate: () => (el.textContent = Math.round(o.v)) }); });    const mm = gsap.matchMedia(); mm.add("(min-width: 901px)", () => { const cards = $$
 ("[data-card]");
     cards.forEach((card, i) => {
       const next = cards[i + 1]; if (!next) return;
