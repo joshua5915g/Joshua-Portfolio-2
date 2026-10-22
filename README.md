@@ -40,8 +40,12 @@ GSAP, Lenis and the fonts load from CDNs, so an internet connection is needed. I
 
 ```
 .
-├── index.html     # the whole site: markup, styles, scripts and content
-├── resume.pdf     # linked from the Resume section
+├── index.html     # page structure and metadata
+├── style.css      # layout, visual styles and responsive rules
+├── script.js      # interactions, rendering and motion
+├── content.js     # editable projects, certificates, experiments and notes
+├── assets/        # portrait and certificate images (add these files)
+├── resume.pdf     # optional downloadable resume (add this file)
 └── README.md
 ```
 
@@ -57,13 +61,15 @@ Then visit http://localhost:4173.
 
 ## Customise
 
-All editable text for projects, experiments and notes lives in the `window.SITE` object inside `index.html`. Search for `window.SITE`.
+Editable projects, certificates, experiments, notes and contact email live in the `window.SITE` object in `content.js`.
 
 - **Add a project:** copy an entry in `projects` and change its fields.
 - **Add a screenshot:** put the image in an `assets/` folder and set `img: "assets/name.jpg"` on that project. Without it, a designed placeholder is shown.
 - **Add a note:** copy an entry in `posts`.
-- **Change colours:** edit the variables at the top of the `<style>` block (`--ember`, `--amethyst`, `--bg`).
-- **Update the resume:** replace `resume.pdf`.
+- **Change colours:** edit the variables at the top of `style.css` (`--ember`, `--amethyst`, `--bg`).
+- **Update the resume:** add or replace `resume.pdf` in the project root. The current source references this file; include it before publishing for the resume links to work.
+
+The page also references `assets/joshua.jpg` and certificate images under `assets/`. Add the real portrait and certificate files there before publishing; these personal assets are not included in the source files.
 
 ## Deploy
 
